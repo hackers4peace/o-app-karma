@@ -50,6 +50,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <!-- endbuild -->
 
+  <!-- build:js scripts/lodash.js -->
+  <script src="bower_components/lodash/lodash.js"></script>
+  <!-- endbuild -->
+
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
@@ -66,7 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax
       auto
       verbose="true"
-      url="/data/goals.json"
+      url="/data/graph.json"
       handle-as="json"
       on-response="handleDataResponse"
       debounce-duration="300"></iron-ajax>

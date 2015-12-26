@@ -72,7 +72,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
 
   app.handleDataResponse = function (e) {
-    app.goals = e.detail.response;
+    app.goals = _.filter(e.detail.response['@graph'], function (res) {
+      return res.type === 'Goal';
+    });
     console.log('data response', e.detail.response);
   }
 
