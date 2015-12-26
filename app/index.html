@@ -54,6 +54,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="bower_components/lodash/lodash.js"></script>
   <!-- endbuild -->
 
+  <!-- build:js scripts/moment.js -->
+  <script src="bower_components/moment/moment.js"></script>
+  <!-- endbuild -->
+
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
@@ -180,14 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="single-goal">
-               <paper-tabs selected="{{selected}}" class="bottom self-end" style="width: 300px;">
-                 <paper-tab>Activities</paper-tab>
-                 <paper-tab>Contributors</paper-tab>
-               </paper-tabs>
-               <iron-pages selected="{{selected}}">
-                <div>Activities Content</div>
-                <div>Contributors Content</div>
-              </iron-pages>
+              <o-goal id="[[params.uuid]]"></o-goal>
             </section>
 
           </iron-pages>

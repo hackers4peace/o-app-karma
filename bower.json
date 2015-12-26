@@ -9,7 +9,8 @@
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.3",
     "timer-dialog": "https://github.com/polysocial/timer-dialog.git",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "social-timer": "https://github.com/polysocial/social-timer.git"
   },
   "devDependencies": {
     "web-component-tester": "*",
