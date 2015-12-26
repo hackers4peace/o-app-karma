@@ -17,8 +17,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <ul>
-      <template is="dom-repeat" items="{{items}}">
-        <li><span class="paper-font-body1">{{item}}</span></li>
+      <template is="dom-repeat" items="{{goals}}">
+        <li><span class="paper-font-body1">{{item.title}}</span></li>
       </template>
     </ul>
   </template>
@@ -30,20 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'my-list',
         properties: {
-          items: {
+          goals: {
             type: Array,
             notify: true,
           }
-        },
-        ready: function() {
-          this.items = [
-            'Responsive Web App boilerplate',
-            'Iron Elements and Paper Elements',
-            'End-to-end Build Tooling (including Vulcanize)',
-            'Unit testing with Web Component Tester',
-            'Routing with Page.js',
-            'Offline support with the Platinum Service Worker Elements'
-          ];
         }
       });
     })();
