@@ -9,18 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="my-greeting">
+<dom-module id="o-greeting">
   <template>
     <style include="shared-styles"></style>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2 class="page-title"><span>{{greeting}}</span></h2>
-    <span class="paper-font-body2">Edit Greeting</span>
-    <!-- Listens for "input" event and sets greeting to <input>.value -->
-    <input class="paper-font-body2" value="{{greeting::input}}">
+    <paper-button>START ACTIVITY</paper-button>
   </template>
 
   <script>
@@ -28,12 +20,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'my-greeting',
+        is: 'o-greeting',
 
         properties: {
           greeting: {
             type: String,
-            value: 'Welcome to Avocados!',
             notify: true
           }
         }

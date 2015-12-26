@@ -25,8 +25,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Routes
     page('/', scrollToTop, function() {
       app.route = 'home';
-      app.title = 'Avocados';
-      app.description = "Distributed open soure time tracking";
+      app.title = 'Welcome to Avocados';
+      app.description = "Track your activities on open projects";
     });
 
     page('/users', scrollToTop, function() {
@@ -54,6 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       })
       app.title = app.goal.title
       app.description = app.goal.description
+      app.selected = 0
     });
 
     page('/users/:name', scrollToTop, function(data) {

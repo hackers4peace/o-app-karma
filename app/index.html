@@ -88,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <a data-route="users" href="/users" on-click="onDataRouteClick">
             <iron-icon icon="icons:face"></iron-icon>
-            <span>Users</span>
+            <span>People</span>
           </a>
 
           <a data-route="goals" href="/goals" on-click="onDataRouteClick">
@@ -113,7 +113,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
           <paper-icon-button icon="search"></paper-icon-button>
 
           <!-- Application name -->
@@ -125,9 +124,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="bottom bottom-container center horizontal layout">
             <div class="bottom-title paper-font-subhead">{{description}}</div>
           </div>
-
-
-
         </paper-toolbar>
 
         <!-- Main Content -->
@@ -136,14 +132,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="home">
               <paper-material elevation="1">
-                <my-greeting></my-greeting>
+                <o-greeting></o-greeting>
               </paper-material>
             </section>
 
             <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="page-subtitle">People</h2>
-              </paper-material>
               <paper-material elevation="1">
                 <paper-item>
                   <paper-item-body>
@@ -192,8 +185,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <paper-tab>Contributors</paper-tab>
                </paper-tabs>
                <iron-pages selected="{{selected}}">
-                <div>Activities</div>
-                <div>Contributors</div>
+                <div>Activities Content</div>
+                <div>Contributors Content</div>
               </iron-pages>
             </section>
 
