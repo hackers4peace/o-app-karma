@@ -20,12 +20,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template is="dom-repeat" items="{{goals}}">
         <paper-item>
           <paper-item-body>
-            <div>{{item.title}}</div>
+            <a href="/goals/{{item.title}}">{{item.title}}</a>
           </paper-item-body>
         </paper-item>
       </template>
     </div>
-
+  
   </template>
 
   <script>

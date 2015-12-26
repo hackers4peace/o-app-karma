@@ -88,12 +88,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </a>
 
           <a data-route="users" href="/users" on-click="onDataRouteClick">
-            <iron-icon icon="info"></iron-icon>
+            <iron-icon icon="icons:face"></iron-icon>
             <span>Users</span>
           </a>
 
           <a data-route="goals" href="/goals" on-click="onDataRouteClick">
-            <iron-icon icon="info"></iron-icon>
+            <iron-icon icon="icons:radio-button-checked"></iron-icon>
             <span>Goals</span>
           </a>
 
@@ -131,9 +131,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="home">
               <paper-material elevation="1">
                 <my-greeting></my-greeting>
-          </paper-material>
-
-
+              </paper-material>
             </section>
 
             <section data-route="users">
@@ -158,6 +156,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span>{{params.name}}</span>
                 </h2>
                 <div>This is <span>{{params.name}}</span>'s section</div>
+              </paper-material>
+            </section>
+
+            <section data-route="single-goal">
+              <paper-material elevation="1">
+                <h2 class="page-subtitle">
+                <span>{{params.title}}</span>
+                </h2>
               </paper-material>
             </section>
 
