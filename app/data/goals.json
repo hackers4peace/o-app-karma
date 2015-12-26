@@ -1,0 +1,14 @@
+[
+  {
+    "githubID": "https://github.com/CO-OPEN/avocados/issues/1",
+    "title": "Show this issue in the app as a goal",
+    "description": "",
+    "id": "http://localhost:5000/goals/id1"
+  },
+  {
+    "githubID": "https://github.com/CO-OPEN/avocados/issues/2",
+    "title": "Track time on goal",
+    "description": "",
+    "id": "http://localhost:5000/goals/id2"
+  }
+]

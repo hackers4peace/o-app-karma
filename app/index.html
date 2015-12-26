@@ -84,10 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Users</span>
           </a>
 
-          <a data-route="contact" href="/contact" on-click="onDataRouteClick">
-            <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
+          <a data-route="goals" href="/goals" on-click="onDataRouteClick">
+            <iron-icon icon="info"></iron-icon>
+            <span>Goals</span>
           </a>
+
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -161,6 +162,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
             </section>
 
+            <section data-route="goals">
+              <paper-material elevation="1">
+                <h2 class="page-title">Goals</h2>
+                <p>This is the goals section</p>
+              </paper-material>
+            </section>
+
             <section data-route="user-info">
               <paper-material elevation="1">
                 <h2 class="page-title">
@@ -170,13 +178,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
             </section>
 
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="page-title">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
-
+        
           </iron-pages>
         </div>
       </paper-scroll-header-panel>
