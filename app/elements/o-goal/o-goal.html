@@ -42,15 +42,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'o-goal',
 
       properties: {
-        id: {
+        uuid: {
           type: String
         }
       },
       handleSocialTimerStart: function() {
-        console.log('start', this.id);
+        console.log('start', this.uuid);
       },
       handleSocialTimerStop: function() {
-        console.log('stop', this.id);
+        console.log('stop', this.uuid);
       }
     });
   })();
