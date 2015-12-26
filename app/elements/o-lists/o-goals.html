@@ -15,18 +15,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      paper-card {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     </style>
-    <div class="list short" role="listbox">
-      <template is="dom-repeat" items="{{items}}">
-        <paper-item>
-          <paper-item-body>
-            <a href="/goals/{{item.uuid}}">{{item.title}}</a>
-          </paper-item-body>
-        </paper-item>
-      </template>
-    </div>
-
+    <template is="dom-repeat" items="{{items}}">
+      <a href="/goals/{{item.uuid}}">
+        <paper-card heading="{{item.title}}">
+        </paper-card>
+      </a>
+    </template>
   </template>
+
 
   <script>
     (function () {

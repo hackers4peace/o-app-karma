@@ -24,8 +24,39 @@
       "type": "Activity",
       "start": "2015-12-26T20:05:16.068Z",
       "end": "2015-12-26T20:08:25.068Z",
-      "action": "Work",
+      "action": "Coding",
+      "actor": "http://samuelandert.com"
+    },
+    {
+      "uuid": "b9f7233b-7af0-4128-83da-8e62ba289687",
+      "object": "http://localhost:5000/goals/id2",
+      "id": "http://localhost:5000/b9f7233b-7af0-4128-83da-8e62ba289687",
+      "type": "Activity",
+      "start": "2015-12-26T20:05:16.068Z",
+      "end": "2015-12-26T20:08:25.068Z",
+      "action": "Coding",
+      "actor": "http://samuelandert.com"
+    },
+    {
+      "uuid": "10d8ace9-2a47-468c-a654-e4a868718529",
+      "object": "http://localhost:5000/goals/id2",
+      "id": "http://localhost:5000/10d8ace9-2a47-468c-a654-e4a868718529",
+      "type": "Activity",
+      "start": "2015-12-26T20:05:16.068Z",
+      "end": "2015-12-26T20:08:25.068Z",
+      "action": "Eating",
+      "actor": "http://samuelandert.com"
+    },
+    {
+      "uuid": "fdc4996b-eb6a-4e7e-84c8-29e330dbff21",
+      "object": "http://localhost:5000/goals/id2",
+      "id": "http://localhost:5000/fdc4996b-eb6a-4e7e-84c8-29e330dbff21",
+      "type": "Activity",
+      "start": "2015-12-26T20:05:16.068Z",
+      "end": "2015-12-26T20:08:25.068Z",
+      "action": "Designing",
       "actor": "http://samuelandert.com"
     }
+
   ]
 }
