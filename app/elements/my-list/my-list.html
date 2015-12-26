@@ -16,11 +16,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <ul>
+    <div class="list short" role="listbox">
       <template is="dom-repeat" items="{{goals}}">
-        <li><span class="paper-font-body1">{{item.title}}</span></li>
+        <paper-item>
+          <paper-item-body>
+            <div>{{item.title}}</div>
+          </paper-item-body>
+        </paper-item>
       </template>
-    </ul>
+    </div>
+
   </template>
 
   <script>
