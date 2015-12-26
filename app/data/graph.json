@@ -5,7 +5,7 @@
       "uuid": "7eb729cd-1507-4d58-a830-0d0fe2574c6d",
       "githubID": "https://github.com/CO-OPEN/avocados/issues/1",
       "title": "Show this issue in the app as a goal",
-      "description": "",
+      "description": "Description coming here",
       "id": "http://localhost:5000/goals/id1",
       "type": "Goal"
     },
@@ -13,7 +13,7 @@
       "uuid": "e53150d5-0b4d-426d-8fa9-ec01e7aa612b",
       "githubID": "https://github.com/CO-OPEN/avocados/issues/2",
       "title": "Track time on goal",
-      "description": "",
+      "description": "Description coming here",
       "id": "http://localhost:5000/goals/id2",
       "type": "Goal"
     },

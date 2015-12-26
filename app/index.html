@@ -118,13 +118,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
-            <div class="app-name">Avocados</div>
+            <div class="app-name">{{title}}</div>
           </div>
 
           <!-- Application sub title -->
           <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">Distributed opensource time-tracking</div>
+            <div class="bottom-title paper-font-subhead">{{description}}</div>
           </div>
+
+
 
         </paper-toolbar>
 
@@ -185,11 +187,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="single-goal">
-              <paper-material elevation="1">
-                <h2 class="page-subtitle">
-                <span>{{params.title}}</span>
-                </h2>
-              </paper-material>
+               <paper-tabs selected="{{selected}}" class="bottom self-end" style="width: 300px;">
+                 <paper-tab>Activities</paper-tab>
+                 <paper-tab>Contributors</paper-tab>
+               </paper-tabs>
+               <iron-pages selected="{{selected}}">
+                <div>Activities</div>
+                <div>Contributors</div>
+              </iron-pages>
             </section>
 
           </iron-pages>

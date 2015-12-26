@@ -25,32 +25,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Routes
     page('/', scrollToTop, function() {
       app.route = 'home';
+      app.title = 'Avocados';
+      app.description = "Distributed open soure time tracking";
     });
 
     page('/users', scrollToTop, function() {
       app.route = 'users';
+      app.title = 'People';
+      app.description = "All your contacts";
     });
 
     page('/goals', scrollToTop, function() {
       app.route = 'goals';
+      app.title = 'Goals';
+      app.description = "Overview about your goals";
     });
 
     page('/activities', scrollToTop, function() {
       app.route = 'activities';
+      app.title = 'Activites';
+      app.description = "All your activites here";
     });
 
-    page('/goals/:title', scrollToTop, function(data) {
+    page('/goals/:uuid', scrollToTop, function(data) {
       app.route = 'single-goal';
-      app.params = data.params;
+      app.goal = _.find(app.goals,function(goal){
+        return goal.uuid === data.params.uuid
+      })
+      app.title = app.goal.title
+      app.description = app.goal.description
     });
 
     page('/users/:name', scrollToTop, function(data) {
       app.route = 'user-info';
       app.params = data.params;
-    });
-
-    page('/contact', scrollToTop, function() {
-      app.route = 'contact';
     });
 
     // add #! before urls
