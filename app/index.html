@@ -97,6 +97,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Goals</span>
           </a>
 
+          <a data-route="actions" href="/actions" on-click="onDataRouteClick">
+            <iron-icon icon="icons:alarm-on"></iron-icon>
+            <span>Actions</span>
+          </a>
+
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -146,7 +151,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="goals">
               <paper-material elevation="1">
                 <h2 class="page-subtitle">Goals</h2>
-                <my-list goals="{{goals}}"></my-list>
+                <my-list items="{{goals}}"></my-list>
+              </paper-material>
+            </section>
+
+            <section data-route="actions">
+              <paper-material elevation="1">
+                <h2 class="page-subtitle">Actions</h2>
+                <my-list items="{{actions}}"></my-list>
               </paper-material>
             </section>
 

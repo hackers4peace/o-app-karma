@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="my-list">
+<dom-module id="actions">
   <template>
     <style>
       :host {
@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <div class="list short" role="listbox">
-      <template is="dom-repeat" items="{{items}}">
+      <template is="dom-repeat" items="{{actions}}">
         <paper-item>
           <paper-item-body>
             <a href="/goals/{{item.title}}">{{item.title}}</a>
@@ -33,9 +33,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'my-list',
+        is: 'actions',
         properties: {
-          items: {
+          actions: {
             type: Array,
             notify: true,
           }
