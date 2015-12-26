@@ -16,6 +16,16 @@
       "description": "",
       "id": "http://localhost:5000/goals/id2",
       "type": "Goal"
+    },
+    {
+      "uuid": "b0cdd6a4-c850-4171-9957-b65d4c7ff973",
+      "object": "http://localhost:5000/goals/id2",
+      "id": "http://localhost:5000/b0cdd6a4-c850-4171-9957-b65d4c7ff973",
+      "type": "Activity",
+      "start": "2015-12-26T20:05:16.068Z",
+      "end": "2015-12-26T20:08:25.068Z",
+      "action": "Work",
+      "actor": "http://samuelandert.com"
     }
   ]
 }

@@ -75,6 +75,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.goals = _.filter(e.detail.response['@graph'], function (res) {
       return res.type === 'Goal';
     });
+    app.activities = _.filter(e.detail.response['@graph'], function (res) {
+      return res.type === 'Activity';
+    });
     console.log('data response', e.detail.response);
   }
 

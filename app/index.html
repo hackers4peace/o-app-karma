@@ -96,9 +96,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Goals</span>
           </a>
 
-          <a data-route="actions" href="/actions" on-click="onDataRouteClick">
+          <a data-route="activities" href="/activities" on-click="onDataRouteClick">
             <iron-icon icon="icons:alarm-on"></iron-icon>
-            <span>Actions</span>
+            <span>Activities</span>
           </a>
 
         </paper-menu>
@@ -164,14 +164,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="goals">
               <paper-material elevation="1">
                 <h2 class="page-subtitle">Goals</h2>
-                <my-list items="{{goals}}"></my-list>
+                <o-goals items="{{goals}}"></o-goals>
               </paper-material>
             </section>
 
-            <section data-route="actions">
+            <section data-route="activities">
               <paper-material elevation="1">
-                <h2 class="page-subtitle">Actions</h2>
-                <my-list items="{{actions}}"></my-list>
+                <h2 class="page-subtitle">Activities</h2>
+                <o-activities items="{{activities}}"></o-activities>
               </paper-material>
             </section>
 
@@ -204,7 +204,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  duration="6000"
                  text="Caching complete! This app will work offline.">
     </paper-toast>
-
     <platinum-sw-register auto-register
                           clients-claim
                           skip-waiting
