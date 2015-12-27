@@ -17,8 +17,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <paper-toast opened duration="0">
-      <a href="#">Show more</a>
+    <paper-toast opened="{{opened}}" duration="0" style="width:100%;background:#689F38" >
+      <iron-icon icon="icons:alarm-on"></iron-icon>
+      <span>{{timeElapsed}}<span>
+      <div style="float:right">
+        <paper-button id="start-button" on-click="handleStopButtonClick" autofocus >Stop</paper-button>
+      </div>
     </paper-toast>
   </template>
   <script>
@@ -27,12 +31,84 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'o-footer',
-
       properties: {
-        foo: {
+        activity: {
           type: String,
-          value: 'o-footer',
-          notify: true
+          value: null,
+          notify: true,
+          observer: '_onActivityChange'
+        },
+        opened: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          observer: '_onOpenedChange'
+        },
+
+        isRunning: {
+          type: Boolean,
+          value: false
+        },
+
+        isFinished: {
+          type: Boolean,
+          value: false
+        },
+
+        seconds: {
+          type: Number,
+          value: 0
+        },
+
+        timeElapsed: {
+          type: String,
+          computed: 'getTimeElapsed(seconds)'
+        },
+      },
+      _onActivityChange: function (newValue, oldValue) {
+        if (!newValue) {
+          this.opened = false;
+        } else {
+          this.opened = true;
+        }
+      },
+      _onOpenedChange: function (newValue, oldValue) {
+        if (newValue !== oldValue) {
+          if (newValue) {
+            this.isFinished = false;
+            this.seconds = 0;
+            this.isRunning = false;
+            this.startTimer();
+          }
+        }
+      },
+
+
+      getTimeElapsed: function (sec) {
+        return moment().hour(0).minute(0).second(sec).format('HH : mm : ss');
+      },
+      startTimer: function () {
+        this.isRunning = true;
+        this.createTimer();
+        this.fire('start');
+      },
+      stopTimer: function() {
+        this.isRunning = false;
+        this.isFinished = true;
+        this.fire('stop');
+      },
+      createTimer: function() {
+        if(this.isRunning) {
+          this.seconds += 1;
+          this.async(this.createTimer, 1000);
+        }
+      },
+      handleStopButtonClick: function() {
+        if (this.isRunning) {
+           this.stopTimer();
+           this.async(function() {
+              this.opened = false;
+           }, 200);
         }
       }
     });

@@ -14,26 +14,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles"></style>
     <div>
       <h4>Choose an activity to start tracking your time</h4>
-      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Coding</paper-button>
-      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Cooking</paper-button>
-      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Eating</paper-button>
-      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Cleaning Dishes</paper-button>
-      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Sleeping</paper-button>
+      <paper-button raised on-click="onActivityClick" data-activity="Coding"><iron-icon icon="icons:alarm-on"></iron-icon>Coding</paper-button>
+      <paper-button raised on-click="onActivityClick" data-activity="Cooking"><iron-icon icon="icons:alarm-on"></iron-icon>Cooking</paper-button>
+      <paper-button raised on-click="onActivityClick" data-activity="Eating"><iron-icon icon="icons:alarm-on"></iron-icon>Eating</paper-button>
+      <paper-button raised on-click="onActivityClick" data-activity="Cleaning"><iron-icon icon="icons:alarm-on"></iron-icon>Cleaning</paper-button>
+      <paper-button raised on-click="onActivityClick" data-activity="Sleeping"><iron-icon icon="icons:alarm-on"></iron-icon>Sleeping</paper-button>
     </div>
   </template>
 
   <script>
     (function() {
+
       'use strict';
 
       Polymer({
         is: 'o-selector',
 
         properties: {
-          greeting: {
+          activity: {
             type: String,
             notify: true
           }
+        },
+
+        onActivityClick: function(e) {
+          console.log(e.target.getAttribute('data-activity'));
+          this.activity = e.target.getAttribute('data-activity');
         }
       });
     })();

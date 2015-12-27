@@ -11,7 +11,8 @@
     "timer-dialog": "https://github.com/polysocial/timer-dialog.git",
     "lodash": "~3.10.1",
     "social-timer": "https://github.com/polysocial/social-timer.git",
-    "iron-image": "PolymerElements/iron-image#~1.0.4"
+    "iron-image": "PolymerElements/iron-image#~1.0.4",
+    "moment": "~2.10.6"
   },
   "devDependencies": {
     "web-component-tester": "*",
