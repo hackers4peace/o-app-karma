@@ -10,7 +10,8 @@
     "page": "visionmedia/page.js#~1.6.3",
     "timer-dialog": "https://github.com/polysocial/timer-dialog.git",
     "lodash": "~3.10.1",
-    "social-timer": "https://github.com/polysocial/social-timer.git"
+    "social-timer": "https://github.com/polysocial/social-timer.git",
+    "iron-image": "PolymerElements/iron-image#~1.0.4"
   },
   "devDependencies": {
     "web-component-tester": "*",

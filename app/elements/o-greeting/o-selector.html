@@ -9,10 +9,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="o-greeting">
+<dom-module id="o-selector">
   <template>
     <style include="shared-styles"></style>
-    <paper-button>START ACTIVITY</paper-button>
+    <div>
+      <h4>Choose an activity to start tracking your time</h4>
+      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Coding</paper-button>
+      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Cooking</paper-button>
+      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Eating</paper-button>
+      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Cleaning Dishes</paper-button>
+      <paper-button raised><iron-icon icon="icons:alarm-on"></iron-icon>Sleeping</paper-button>
+    </div>
   </template>
 
   <script>
@@ -20,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'o-greeting',
+        is: 'o-selector',
 
         properties: {
           greeting: {
