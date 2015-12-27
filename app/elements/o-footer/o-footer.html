@@ -17,12 +17,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <paper-toast opened="{{opened}}" duration="0" style="width:100%;background:#689F38" >
-      <iron-icon icon="icons:alarm-on"></iron-icon>
-      <span>{{timeElapsed}}<span>
-      <div style="float:right">
-        <paper-button id="start-button" on-click="handleStopButtonClick" autofocus >Stop</paper-button>
-      </div>
+    <paper-toast opened="{{opened}}" duration="0" style="width:100%;background:#689F38;padding: 5px;" >
+      <paper-item class="layout horizontal">
+        <div><iron-icon icon="icons:alarm-on"></iron-icon></div>
+        <div class="flex">{{timeElapsed}}</div>
+        <div><paper-button id="start-button" on-click="handleStopButtonClick" autofocus >Stop</paper-button></div>
+      </paper-item>
     </paper-toast>
   </template>
   <script>
