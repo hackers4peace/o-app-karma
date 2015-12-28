@@ -115,22 +115,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-scroll-header-panel main condenses keep-condensed-header>
 
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" class="tall">
-          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <span class="flex"></span>
+        <paper-toolbar id="mainToolbar">
 
-          <!-- Toolbar icons -->
-          <paper-icon-button icon="search"></paper-icon-button>
+          <paper-icon-button icon="menu" id="paperToggle" paper-drawer-toggle></paper-icon-button>
+            <div class="title">{{title}}</div>
+          <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
 
-          <!-- Application name -->
-          <div class="middle middle-container center horizontal layout">
-            <div class="app-name">{{title}}</div>
-          </div>
-
-          <!-- Application sub title -->
-          <div class="bottom bottom-container center horizontal layout">
-            <div class="bottom-title paper-font-subhead">{{description}}</div>
-          </div>
         </paper-toolbar>
 
         <!-- Main Content -->
@@ -138,32 +128,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
-            <paper-material elevation="1">
-              <o-identifier person-id="{{data.personId}}"></o-identifier>
-            </paper-material>
+              <paper-material elevation="1">
+                <o-identifier person-id="{{data.personId}}"></o-identifier>
+              </paper-material>
               <paper-material elevation="1">
                 <o-selector activity="{{currentActivity}}"></o-selector>
               </paper-material>
             </section>
 
             <section data-route="users">
-              <paper-material elevation="1">
-                <paper-item>
-                  <paper-item-body>
-                    <a href="/users/Elf">Elf</a>
-                  </paper-item-body>
-                </paper-item>
-                <paper-item>
-                  <paper-item-body>
-                    <a href="/users/Maciej">Maciej</a>
-                  </paper-item-body>
-                </paper-item>
-                <paper-item>
-                  <paper-item-body>
-                    <a href="/users/Sam">Sam</a>
-                  </paper-item-body>
-                </paper-item>
-              </paper-material>
+              <a href="/users/Elf">
+                <paper-card heading="Elf" style="width: 100%; margin-bottom: 20px;"></paper-card>
+              </a>
+              <a href="/users/Maciej">
+                <paper-card heading="Maciej" style="width: 100%; margin-bottom: 20px;"></paper-card>
+              </a>
+              <a href="/users/Sam">
+                <paper-card heading="Sam" style="width: 100%; margin-bottom: 20px;"></paper-card>
+              </a>
             </section>
 
             <section data-route="goals">
@@ -174,23 +156,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <o-activities activities="{{data.activities}}"></o-activities>
             </section>
 
-            <section data-route="user-info">
+            <section data-route="single-person">
               <paper-material elevation="1">
-                <h2 class="page-subtitle">
-                <span>{{params.name}}</span>
-                </h2>
-                <div>This is <span>{{params.name}}</span>'s section</div>
+                <div><span>{{params.name}}</span>'s activity</div>
               </paper-material>
             </section>
 
             <section data-route="single-goal">
-              {{params.title}}
               <o-goal goal-id="{{goal.uuid}}" activity={{currentActivity}} activities={{data.activities}}></o-goal>
             </section>
 
           </iron-pages>
         </div>
-        <o-footer activity="{{currentActivity}}" on-start="handleOnStart" on-stop="handleOnStop"></o-footer>
+
+        <o-timer activity="{{currentActivity}}" on-start="handleOnStart" on-stop="handleOnStop"></o-timer>
+
       </paper-scroll-header-panel>
 
     </paper-drawer-panel>

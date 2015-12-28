@@ -22,14 +22,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding:20px;
       }
     </style>
-    <paper-tabs selected="{{selected}}" class="bottom self-end" style="width: 300px;">
-      <paper-tab>Activities</paper-tab>
-    </paper-tabs>
-    <iron-pages selected="{{selected}}">
-      <paper-button style="margin-top: 20px" raised on-click="onActivityClick">
-        <iron-icon icon="icons:alarm-on"></iron-icon>Start coding
-      </paper-button>
-    </iron-pages>
+    <paper-card style="width: 100%; margin-bottom: 30px">
+      <div class="card-content">
+        <paper-button raised on-click="onActivityClick">
+          <iron-icon icon="icons:alarm-on"></iron-icon>Start coding
+        </paper-button>
+      </div>
+    </paper-card>
     <o-activities activities="{{activities}}" goal-id="{{goalId}}"></o-activities>
   </template>
   <script>
@@ -43,9 +42,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         goalId: {
           type: String
         },
-        selected: {
+        description: {
           type: String,
-          value: 0
         },
         activity: {
           type: Object,
