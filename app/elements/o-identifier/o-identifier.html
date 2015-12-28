@@ -17,8 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    {{potato}}
-    <paper-input label="Identify yourself" value="{{potato}}"></paper-input>
+    <paper-input label="Identify yourself" value="{{personid}}"></paper-input>
 
   </template>
   <script>
@@ -29,7 +28,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'o-identifier',
 
       properties: {
-        potato: {
+        personid: {
           type: String,
           notify: true,
           observer: '_onPersonIdChange'

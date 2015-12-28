@@ -79,6 +79,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="handleDataResponse"
       debounce-duration="300"></iron-ajax>
 
+    <polymer-localforage value="{{data}}"><polymer-localforage>
+
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
@@ -135,8 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="home">
             <paper-material elevation="1">
-              {{potato}}
-              <o-identifier potato="{{potato}}"></o-identifier>
+              <o-identifier personid="{{data.personid}}"></o-identifier>
             </paper-material>
               <paper-material elevation="1">
                 <o-selector activity="{{currentActivity}}"></o-selector>
