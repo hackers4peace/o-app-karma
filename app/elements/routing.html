@@ -26,25 +26,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/', scrollToTop, function() {
       app.route = 'home';
       app.title = 'Welcome to Avocados';
-      app.description = "Track your activities on open projects";
     });
 
     page('/users', scrollToTop, function() {
       app.route = 'users';
       app.title = 'People';
-      app.description = "All your contacts";
     });
 
     page('/goals', scrollToTop, function() {
       app.route = 'goals';
       app.title = 'Goals';
-      app.description = "Overview about your goals";
     });
 
     page('/activities', scrollToTop, function() {
       app.route = 'activities';
       app.title = 'Activites';
-      app.description = "All your activites here";
     });
 
     page('/goals/:uuid', scrollToTop, function(data) {
@@ -53,14 +49,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return goal.uuid === data.params.uuid
       })
       app.title = app.goal.title
-      app.description = app.goal.description
-      app.selected = 0
       app.params = data.params;
     });
 
     page('/users/:name', scrollToTop, function(data) {
-      app.route = 'user-info';
+      app.route = 'single-person';
       app.params = data.params;
+      app.title = data.params.name
     });
 
     // add #! before urls

@@ -13,8 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style include="shared-styles"></style>
     <div>
-      <h4>Choose an activity to start tracking your time</h4>
-      <template is="dom-repeat" items="{{avaliableActivities}}">
+      <p>Choose an activity to start tracking your time<p>
+      <template is="dom-repeat" items="{{availableActivities}}">
         <paper-button raised on-click="onActivityClick" ><iron-icon icon="{{item.icon}}"></iron-icon>{{item.action}}</paper-button>
       </template>
     </div>
@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             notify: true
           },
-          avaliableActivities: {
+          availableActivities: {
             type: Array,
             notify: true,
             value: [

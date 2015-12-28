@@ -17,13 +17,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       paper-card {
         width: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
       }
     </style>
     <template is="dom-repeat" items="{{items}}">
       <a href="/goals/{{item.uuid}}">
-        <paper-card heading="{{item.title}}">
-        </paper-card>
+        <paper-card heading="{{item.title}}"></paper-card>
       </a>
     </template>
   </template>
