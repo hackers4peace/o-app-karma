@@ -20,9 +20,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 10px;
       }
     </style>
-    <template is="dom-repeat" items="{{filteredActivities}}">
+    <template is="dom-repeat" items="{{activities}}" filter="{{computeFilter(goalId)}}">
       <paper-card heading="{{item.action}}">
-        <div class="card-content"> Start: {{item.start}} | End: {{item.end}} | Goal: {{item.object}}</div>
+        <div class="card-content">Person: {{item.actor}} | Start: {{item.start}} | End: {{item.end}}</div>
       </paper-card>
     </template>
   </template>
@@ -32,35 +32,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
       Polymer({
         is: 'o-activities',
+        computeFilter: function (goalId) {
+          if (!goalId) {
+            return null;
+          } else {
+            return function(act) {
+              return act.object === goalId;
+            }
+          }
+        },
         properties: {
           activities: {
             type: Array,
-            notify: true,
-            observer: '_onActivitiesChange'
-          },
-          filteredActivities: {
-            type: Array,
-            notify: true,
+            notify: true
           },
           goalId: {
             type: String,
-            observer: '_onGoalIdChange',
-            value: ''
+            observer: '_onGoalChanged',
+            notify: true
           }
         },
-        _onActivitiesChange: function(newVal, oldVal) {
-          if (newVal) {
-            this.filteredActivities = this.activities
-          }
-        },
-        _onGoalIdChange: function(newVal, oldVal){
-          if (newVal) {
-            this.filteredActivities = _.filter(this.activities, function (act) {
-              return act.object === newVal
-            })
-          } else {
-            this.filteredActivities = this.activities
-          }
+        _onGoalChanged: function (newVal, oldVal) {
+          console.log("_onGoalChanged", newVal);
         }
       });
     })();

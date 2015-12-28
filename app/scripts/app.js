@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.initializeData = function() {
     console.log('initialization');
     app.data = {
-      personId: 'http://samuelandert.com',
+      personId: 'Bob',
       activities: []
     }
   }
