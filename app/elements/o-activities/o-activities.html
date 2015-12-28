@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 10px;
       }
     </style>
-    <template is="dom-repeat" items="{{activities}}">
+    <template is="dom-repeat" items="{{filteredActivities}}">
       <paper-card heading="{{item.action}}">
         <div class="card-content"> Start: {{item.start}} | End: {{item.end}}  </div>
       </paper-card>
@@ -36,10 +36,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           activities: {
             type: Array,
             notify: true,
+            observer: '_onActivitiesChange'
           },
-          minutes: {
+          filteredActivities: {
+            type: Array,
+            notify: true,
+          },
+          goalId: {
             type: String,
-            computed: 'calculateMinutes()'
+            observer: '_onGoalIdChange',
+            value: ''
+          }
+        },
+        _onActivitiesChange: function(newVal, oldVal) {
+          console.log ("chnaged")
+          if (newVal) {
+            this.filteredActivities = this.activities
+          }
+        },
+        _onGoalIdChange: function(newVal, oldVal){
+          if (newVal) {
+            this.filteredActivities = _.filter(this.activities, function (act) {
+              return act.object === newVal
+            })
+          } else {
+            this.filteredActivities = this.activities
           }
         }
       });

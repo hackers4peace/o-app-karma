@@ -29,7 +29,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-button style="margin-top: 20px" raised on-click="onActivityClick">
         <iron-icon icon="icons:alarm-on"></iron-icon>Start coding
       </paper-button>
-   </iron-pages>
+    </iron-pages>
+    <o-activities activities="{{activities}}" goal-id="{{goalId}}"></o-activities>
   </template>
   <script>
   (function() {
@@ -49,6 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         activity: {
           type: Object,
           notify: true
+        },
+        activities: {
+          type: Array
         }
       },
 
