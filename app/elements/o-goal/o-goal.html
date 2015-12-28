@@ -26,7 +26,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-tab>Activities</paper-tab>
     </paper-tabs>
     <iron-pages selected="{{selected}}">
-      <paper-button style="margin-top: 20px" raised on-click="onActivityClick" data-activity="Coding"><iron-icon icon="icons:alarm-on"></iron-icon>Start coding</paper-button>
+      <paper-button style="margin-top: 20px" raised on-click="onActivityClick">
+        <iron-icon icon="icons:alarm-on"></iron-icon>Start coding
+      </paper-button>
    </iron-pages>
   </template>
   <script>
@@ -37,19 +39,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'o-goal',
 
       properties: {
-        uuid: {
+        goalId: {
           type: String
         },
         selected: {
           type: String,
           value: 0
+        },
+        activity: {
+          type: Object,
+          notify: true
         }
       },
-      handleSocialTimerStart: function() {
-        console.log('start', this.uuid);
-      },
-      handleSocialTimerStop: function() {
-        console.log('stop', this.uuid);
+
+      onActivityClick: function (e) {
+        console.log('goalId', this.goalId);
+        this.activity = {
+          uuid: "b0cdd6a4-c850-4171-9957-b65d4c7ff973",
+          id: "http://localhost:5000/b0cdd6a4-c850-4171-9957-b65d4c7ff973",
+          type: "Activity",
+          action: "Coding",
+          icon : "icons:alarm-on",
+          object: this.goalId
+        };
       }
     });
   })();

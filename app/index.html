@@ -184,7 +184,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="single-goal">
-              <o-goal uuid="{{params.uuid}}"></o-goal>
+              {{params.title}}
+              <o-goal goal-id="{{goal.uuid}}" activity={{currentActivity}}></o-goal>
             </section>
 
           </iron-pages>
