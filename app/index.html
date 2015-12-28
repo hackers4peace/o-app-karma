@@ -133,7 +133,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-            <section data-route="home">
+            <section data-route="home"><paper-material elevation="1">
+              <paper-input label="Identify yourself"></paper-input>
+            </paper-material>
               <paper-material elevation="1">
                 <o-selector activity="{{currentActivity}}"></o-selector>
               </paper-material>
