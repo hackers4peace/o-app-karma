@@ -79,7 +79,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="handleDataResponse"
       debounce-duration="300"></iron-ajax>
 
-    <polymer-localforage value="{{data}}"></polymer-localforage>
+    <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
+    <iron-localstorage name="my-app-storage" value="{{data}}"
+        on-iron-localstorage-load-empty="initializeData"></iron-localstorage>
 
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
@@ -137,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="home">
             <paper-material elevation="1">
-              <o-identifier personid="{{data.personid}}"></o-identifier>
+              <o-identifier person-id="{{data.personId}}"></o-identifier>
             </paper-material>
               <paper-material elevation="1">
                 <o-selector activity="{{currentActivity}}"></o-selector>

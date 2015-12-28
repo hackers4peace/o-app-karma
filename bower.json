@@ -8,12 +8,10 @@
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.3",
-    "timer-dialog": "https://github.com/polysocial/timer-dialog.git",
     "lodash": "~3.10.1",
     "social-timer": "https://github.com/polysocial/social-timer.git",
     "iron-image": "PolymerElements/iron-image#~1.0.4",
-    "moment": "~2.10.6",
-    "polymer-localforage": "~1.0.0"
+    "moment": "~2.10.6"
   },
   "devDependencies": {
     "web-component-tester": "*",
