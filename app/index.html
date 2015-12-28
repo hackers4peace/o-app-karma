@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"></iron-ajax>
 
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
-    <iron-localstorage name="my-app-storage" value="{{data}}"
+    <iron-localstorage name="data-storage" value="{{data}}"
         on-iron-localstorage-load-empty="initializeData"></iron-localstorage>
 
     <paper-drawer-panel id="paperDrawerPanel">
@@ -189,7 +189,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           </iron-pages>
         </div>
-        <o-footer activity="{{currentActivity}}"></o-footer>
+        <o-footer activity="{{currentActivity}}" on-start="handleOnStart" on-stop="handleOnStop"></o-footer>
       </paper-scroll-header-panel>
 
     </paper-drawer-panel>

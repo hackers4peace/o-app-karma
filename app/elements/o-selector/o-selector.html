@@ -14,11 +14,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles"></style>
     <div>
       <h4>Choose an activity to start tracking your time</h4>
-      <paper-button raised on-click="onActivityClick" data-activity="Coding"><iron-icon icon="icons:alarm-on"></iron-icon>Coding</paper-button>
-      <paper-button raised on-click="onActivityClick" data-activity="Cooking"><iron-icon icon="icons:alarm-on"></iron-icon>Cooking</paper-button>
-      <paper-button raised on-click="onActivityClick" data-activity="Eating"><iron-icon icon="icons:alarm-on"></iron-icon>Eating</paper-button>
-      <paper-button raised on-click="onActivityClick" data-activity="Cleaning"><iron-icon icon="icons:alarm-on"></iron-icon>Cleaning</paper-button>
-      <paper-button raised on-click="onActivityClick" data-activity="Sleeping"><iron-icon icon="icons:alarm-on"></iron-icon>Sleeping</paper-button>
+      <template is="dom-repeat" items="{{avaliableActivities}}">
+        <paper-button raised on-click="onActivityClick" ><iron-icon icon="{{item.icon}}"></iron-icon>{{item.action}}</paper-button>
+      </template>
     </div>
   </template>
 
@@ -34,12 +32,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           activity: {
             type: String,
             notify: true
+          },
+          avaliableActivities: {
+            type: Array,
+            notify: true,
+            value: [
+              {
+                "uuid": "b0cdd6a4-c850-4171-9957-b65d4c7ff973",
+                "id": "http://localhost:5000/b0cdd6a4-c850-4171-9957-b65d4c7ff973",
+                "type": "Activity",
+                "action": "Coding",
+                "icon" : "icons:alarm-on"
+              },
+              {
+                "uuid": "c0cdd1a4-c850-4171-9957-b65d4c7ff973",
+                "id": "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
+                "type": "Activity",
+                "action": "Cooking",
+                "icon" : "icons:alarm-on"
+              },
+              {
+                "uuid": "d0cdd1a4-c850-4171-9957-b65d4c7ff973",
+                "id": "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
+                "type": "Activity",
+                "action": "Eating",
+                "icon" : "icons:alarm-on"
+              },
+              {
+                "uuid": "f0cdd1a4-c850-4171-9957-b65d4c7ff973",
+                "id": "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
+                "type": "Activity",
+                "action": "Cleaning",
+                "icon" : "icons:alarm-on"
+              },
+              {
+                "uuid": "f0cdd1a4-c850-4171-9957-b65d4c7ff973",
+                "id": "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
+                "type": "Activity",
+                "action": "Sleeping",
+                "icon" : "icons:alarm-on"
+              },
+            ]
           }
         },
 
         onActivityClick: function(e) {
-          console.log(e.target.getAttribute('data-activity'));
-          this.activity = e.target.getAttribute('data-activity');
+          this.activity = e.model.item;
         }
       });
     })();

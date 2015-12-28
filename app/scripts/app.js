@@ -78,18 +78,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.activities = _.filter(e.detail.response['@graph'], function (res) {
       return res.type === 'Activity';
     });
-    console.log('data response', e.detail.response);
+    //console.log('data response', e.detail.response);
   }
 
-  app.currentActivity = '';
   app.initializeData = function() {
     console.log('initialization');
     app.data = {
-      personid: 'http://samuelandert.com'
+      personId: 'http://samuelandert.com',
+      activities: []
     }
   }
+  app.handleOnStart = function () {
+    this.set('currentActivity.start', new Date());
+    this.set('currentActivity.actor', app.data.personId);
+  }
 
-
-  app.personId = "test"
+  app.handleOnStop = function () {
+    this.set('currentActivity.end',new Date());
+    this.push('data.activities', app.currentActivity);
+    console.log(app.currentActivity);
+    this.set('currentActivity', null);
+  }
 
 })(document);

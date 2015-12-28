@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 10px;
       }
     </style>
-    <template is="dom-repeat" items="{{items}}">
+    <template is="dom-repeat" items="{{activities}}">
       <paper-card heading="{{item.action}}">
         <div class="card-content">Minutes: 25 | Location: Munich | Start: {{item.start}} | End: {{item.end}}  </div>
       </paper-card>
@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'o-activities',
         properties: {
-          items: {
+          activities: {
             type: Array,
             notify: true,
           }
