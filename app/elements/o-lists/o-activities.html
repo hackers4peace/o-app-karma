@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <template is="dom-repeat" items="{{activities}}">
       <paper-card heading="{{item.action}}">
-        <div class="card-content">Minutes: 25 | Location: Munich | Start: {{item.start}} | End: {{item.end}}  </div>
+        <div class="card-content"> Start: {{item.start}} | End: {{item.end}}  </div>
       </paper-card>
     </template>
   </template>
@@ -36,6 +36,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           activities: {
             type: Array,
             notify: true,
+          },
+          minutes: {
+            type: String,
+            computed: 'calculateMinutes()'
           }
         }
       });
