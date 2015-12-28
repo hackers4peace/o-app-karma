@@ -24,14 +24,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <paper-tabs selected="{{selected}}" class="bottom self-end" style="width: 300px;">
       <paper-tab>Activities</paper-tab>
-      <paper-tab>Contributors</paper-tab>
     </paper-tabs>
     <iron-pages selected="{{selected}}">
-     <div class="timer-control">
-       <span>Activities Content</span>
-       <social-timer on-start="handleSocialTimerStart" on-stop="handleSocialTimerStop"></social-timer>
-     </div>
-     <div>Contributors Content</div>
+      <paper-button style="margin-top: 20px" raised on-click="onActivityClick" data-activity="Coding"><iron-icon icon="icons:alarm-on"></iron-icon>Start coding</paper-button>
    </iron-pages>
   </template>
   <script>
@@ -44,6 +39,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         uuid: {
           type: String
+        },
+        selected: {
+          type: String,
+          value: 0
         }
       },
       handleSocialTimerStart: function() {
