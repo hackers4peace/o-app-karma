@@ -10,106 +10,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="o-footer">
+<dom-module id="o-identifier">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <paper-toast opened="{{opened}}" duration="0" style="width:100%;background:#689F38;padding: 5px;" >
-      <paper-item class="layout horizontal">
-        <div><iron-icon icon="icons:alarm-on"></iron-icon></div>
-        <div class="flex">{{timeElapsed}}</div>
-        <div><paper-button id="start-button" on-click="handleStopButtonClick" autofocus >Stop</paper-button></div>
-      </paper-item>
-    </paper-toast>
+    {{potato}}
+    <paper-input label="Identify yourself" value="{{potato}}"></paper-input>
+
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'o-footer',
+      is: 'o-identifier',
+
       properties: {
-        activity: {
+        potato: {
           type: String,
-          value: null,
           notify: true,
-          observer: '_onActivityChange'
-        },
-        opened: {
-          type: Boolean,
-          value: false,
-          notify: true,
-          observer: '_onOpenedChange'
-        },
-
-        isRunning: {
-          type: Boolean,
-          value: false
-        },
-
-        isFinished: {
-          type: Boolean,
-          value: false
-        },
-
-        seconds: {
-          type: Number,
-          value: 0
-        },
-
-        timeElapsed: {
-          type: String,
-          computed: 'getTimeElapsed(seconds)'
-        },
-      },
-      _onActivityChange: function (newValue, oldValue) {
-        if (!newValue) {
-          this.opened = false;
-        } else {
-          this.opened = true;
+          observer: '_onPersonIdChange'
         }
       },
-      _onOpenedChange: function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-          if (newValue) {
-            this.isFinished = false;
-            this.seconds = 0;
-            this.isRunning = false;
-            this.startTimer();
-          }
-        }
-      },
-
-
-      getTimeElapsed: function (sec) {
-        return moment().hour(0).minute(0).second(sec).format('HH : mm : ss');
-      },
-      startTimer: function () {
-        this.isRunning = true;
-        this.createTimer();
-        this.fire('start');
-      },
-      stopTimer: function() {
-        this.isRunning = false;
-        this.isFinished = true;
-        this.fire('stop');
-      },
-      createTimer: function() {
-        if(this.isRunning) {
-          this.seconds += 1;
-          this.async(this.createTimer, 1000);
-        }
-      },
-      handleStopButtonClick: function() {
-        if (this.isRunning) {
-           this.stopTimer();
-           this.async(function() {
-              this.opened = false;
-           }, 200);
-        }
+      _onPersonIdChange: function(newVal, oldVal) {
+        console.log (newVal)
       }
     });
   })();
