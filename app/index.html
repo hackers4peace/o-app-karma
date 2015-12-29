@@ -159,6 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="single-person">
               <paper-material elevation="1">
                 <div><span>{{params.name}}</span>'s activity</div>
+                <o-activities activities="{{data.activities}}" filter-type="person" filter-value="{{params.name}}"></o-activities>
               </paper-material>
             </section>
 

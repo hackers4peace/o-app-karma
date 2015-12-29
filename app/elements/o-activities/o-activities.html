@@ -20,10 +20,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-bottom: 10px;
       }
     </style>
-    <template is="dom-repeat" items="{{activities}}" filter="{{computeFilter(goalId)}}">
-      <paper-card heading="{{item.action}}">
-        <div class="card-content">Person: {{item.actor}} | Start: {{item.start}} | End: {{item.end}}</div>
-      </paper-card>
+    <template is="dom-if" if="{{isGoalFilter}}">
+      <template is="dom-repeat" items="{{activities}}" filter="{{goalFilter(filterValue)}}">
+        <paper-card heading="{{item.action}}">
+          <div class="card-content">Person: {{item.actor}} | Start: {{item.start}} | End: {{item.end}}</div>
+        </paper-card>
+      </template>
+    </template>
+    <template is="dom-if" if="{{isPersonFilter}}">
+      <template is="dom-repeat" items="{{activities}}" filter="{{personFilter(filterValue)}}">
+        <paper-card heading="{{item.action}}">
+          <div class="card-content">Person: {{item.actor}} | Start: {{item.start}} | End: {{item.end}}</div>
+        </paper-card>
+      </template>
     </template>
   </template>
 
@@ -32,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
       Polymer({
         is: 'o-activities',
-        computeFilter: function (goalId) {
+        goalFilter: function (goalId) {
           if (!goalId) {
             return null;
           } else {
@@ -41,19 +50,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           }
         },
+        personFilter: function (personId) {
+          if (!personId) {
+            return null;
+          } else {
+            return function(act) {
+              return act.actor === personId;
+            }
+          }
+        },
         properties: {
           activities: {
             type: Array,
             notify: true
           },
-          goalId: {
+          filterType: {
             type: String,
-            observer: '_onGoalChanged',
+            value: 'goal'
+          },
+          filterValue: {
+            type: String,
             notify: true
+          },
+          isGoalFilter: {
+            type: Boolean,
+            computed: 'getIsGoalFilter(filterType)'
+          },
+          isPersonFilter: {
+            type: Boolean,
+            computed: 'getIsPersonFilter(filterType)'
           }
         },
-        _onGoalChanged: function (newVal, oldVal) {
-          console.log("_onGoalChanged", newVal);
+        getIsGoalFilter: function (filterType) {
+          return filterType === 'goal';
+        },
+        getIsPersonFilter: function (filterType) {
+          return filterType === 'person';
         }
       });
     })();
