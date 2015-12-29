@@ -31,7 +31,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-
     app.fetchData().then(function(goals) {
       app.goals = goals;
     })
@@ -73,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Scroll page to top and expand header
   app.scrollPageToTop = function() {
     document.getElementById('mainContainer').scrollTop = 0;
-  };
+  }
 
   app.initializeData = function() {
     console.log('initialization');
@@ -82,6 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       activities: []
     }
   }
+
   app.handleOnStart = function () {
     this.set('currentActivity.start', new Date());
     this.set('currentActivity.actor', app.data.personId);
