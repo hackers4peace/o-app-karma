@@ -43,12 +43,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.title = 'Activites';
     });
 
-    page('/goals/:uuid', scrollToTop, function(data) {
+    page('/goals/:id', scrollToTop, function(data) {
+      console.log('aaaaaaddd');
       app.route = 'single-goal';
-      app.goal = _.find(app.goals,function(goal){
-        return goal.uuid === data.params.uuid
-      })
-      app.title = app.goal.title
+      var goalId = atob(data.params.id);
+      app.goal = _.find(app.goals, function(goal){
+        return goal.id === goalId;
+      });
+
+      app.title = app.goal.name;
       app.params = data.params;
     });
 

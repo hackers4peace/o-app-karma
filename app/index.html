@@ -58,6 +58,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="bower_components/moment/moment.js"></script>
   <!-- endbuild -->
 
+  <!-- build:js scripts/promise.js -->
+  <script src="bower_components/es6-promise/promise.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:js scripts/fetch.js -->
+  <script src="bower_components/fetch/fetch.js"></script>
+  <!-- endbuild -->
+
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
@@ -70,14 +78,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-
-    <iron-ajax
-      auto
-      verbose="true"
-      url="/data/graph.json"
-      handle-as="json"
-      on-response="handleDataResponse"
-      debounce-duration="300"></iron-ajax>
 
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
     <iron-localstorage name="data-storage" value="{{data}}"
@@ -164,7 +164,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="single-goal">
-              <o-goal goal-id="{{goal.uuid}}" activity={{currentActivity}} activities={{data.activities}}></o-goal>
+              <o-goal goal-id="{{goal.id}}" activity={{currentActivity}} activities={{data.activities}}></o-goal>
             </section>
 
           </iron-pages>

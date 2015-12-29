@@ -21,8 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <template is="dom-repeat" items="{{items}}">
-      <a href="/goals/{{item.uuid}}">
-        <paper-card heading="{{item.title}}"></paper-card>
+      <a href="/goals/{{encodeId(item.id)}}">
+        <paper-card heading="{{item.name}}"></paper-card>
       </a>
     </template>
   </template>
@@ -38,6 +38,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             notify: true,
           }
+        },
+        encodeId: function(id) {
+          //return "12345";
+          return btoa(id);
         }
       });
     })();

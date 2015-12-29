@@ -11,7 +11,9 @@
     "lodash": "~3.10.1",
     "social-timer": "https://github.com/polysocial/social-timer.git",
     "iron-image": "PolymerElements/iron-image#~1.0.4",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "fetch": "~0.10.1",
+    "es6-promise": "~3.0.2"
   },
   "devDependencies": {
     "web-component-tester": "*",
