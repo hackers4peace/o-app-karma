@@ -98,6 +98,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>People</span>
           </a>
 
+          <a data-route="projects" href="/projects" on-click="onDataRouteClick">
+            <iron-icon icon="icons:face"></iron-icon>
+            <span>Projects</span>
+          </a>
+
           <a data-route="goals" href="/goals" on-click="onDataRouteClick">
             <iron-icon icon="icons:radio-button-checked"></iron-icon>
             <span>Goals</span>
@@ -154,6 +159,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="activities">
               <o-activities activities="{{data.activities}}"></o-activities>
+            </section>
+
+            <section data-route="projects">
+              
             </section>
 
             <section data-route="single-person">
