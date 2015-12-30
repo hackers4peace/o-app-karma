@@ -7,37 +7,42 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="o-identifier">
+<dom-module id="o-projects">
   <template>
     <style>
       :host {
         display: block;
       }
-    </style>
-    <paper-input label="Identify yourself" value="{{personId}}"></paper-input>
-
-  </template>
-  <script>
-  (function() {
-    'use strict';
-
-    Polymer({
-      is: 'o-identifier',
-
-      properties: {
-        personId: {
-          type: String,
-          observer: '_onPersonIdChange',
-          notify: true
-        }
-      },
-      _onPersonIdChange: function(newVal, oldVal) {
-      
+      paper-card {
+        width: 100%;
+        margin-bottom: 20px;
       }
-    });
-  })();
+    </style>
+    <template is="dom-repeat" items="{{projects}}">
+        <paper-card heading="{{item.name}}"></paper-card>
+    </template>
+  </template>
+
+
+  <script>
+    (function () {
+      'use strict';
+      Polymer({
+        is: 'o-projects',
+        properties: {
+          projects: {
+            type: Array,
+            notify: true,
+          }
+        },
+        encodeId: function(id) {
+          //return "12345";
+          return btoa(id);
+        }
+      });
+    })();
   </script>
+
 </dom-module>

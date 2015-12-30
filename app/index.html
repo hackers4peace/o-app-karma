@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-
+    <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}"></o-data>
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
     <iron-localstorage name="data-storage" value="{{data}}"
         on-iron-localstorage-load-empty="initializeData"></iron-localstorage>
@@ -159,7 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="goals">
-              <o-goals items="{{goals}}"></o-goals>
+              <o-goals goals="{{goals}}"></o-goals>
             </section>
 
             <section data-route="activities">
@@ -167,9 +167,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="projects">
-              <a href="#">
-                <paper-card heading="project name" style="width: 100%; margin-bottom: 20px;"></paper-card>
-              </a>
+
+              <o-projects projects="{{projects}}"></o-projects>
+
             </section>
 
             <section data-route="organisations">
