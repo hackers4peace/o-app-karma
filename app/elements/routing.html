@@ -40,13 +40,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/activities', scrollToTop, function() {
       app.route = 'activities';
-      app.title = 'Activites';
+      app.title = 'Activities';
     });
 
     page('/projects', scrollToTop, function() {
       app.route = 'projects';
       app.title = 'Projects';
     });
+
+    page('/organisations', scrollToTop, function() {
+      app.route = 'organisations';
+      app.title = 'Organisations';
+    });
+
 
     page('/goals/:id', scrollToTop, function(data) {
       console.log('aaaaaaddd');
@@ -64,6 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'single-person';
       app.params = data.params;
       app.title = data.params.name
+      app.selected = 0
     });
 
     // add #! before urls

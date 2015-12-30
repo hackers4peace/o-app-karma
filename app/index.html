@@ -98,8 +98,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>People</span>
           </a>
 
+          <a data-route="organisations" href="/organisations" on-click="onDataRouteClick">
+            <iron-icon icon="icons:dashboard"></iron-icon>
+            <span>Organisations</span>
+          </a>
+
           <a data-route="projects" href="/projects" on-click="onDataRouteClick">
-            <iron-icon icon="icons:face"></iron-icon>
+            <iron-icon icon="icons:work"></iron-icon>
             <span>Projects</span>
           </a>
 
@@ -165,11 +170,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <o-projects projects="{{projects}}"></o-projects>
             </section>
 
+            <section data-route="organisations">
+              <a href="#">
+                <paper-card heading="orga name" style="width: 100%; margin-bottom: 20px;"></paper-card>
+              </a>g
+            </section>
+
             <section data-route="single-person">
-              <paper-material elevation="1">
-                <div><span>{{params.name}}</span>'s activity</div>
+              <paper-tabs selected="{{selected}}">
+                <paper-tab>Activities</paper-tab>
+                <paper-tab>Goals</paper-tab>
+                <paper-tab>Projects</paper-tab>
+              </paper-tabs>
+
+              <iron-pages selected="{{selected}}">
                 <o-activities activities="{{data.activities}}" filter-type="person" filter-value="{{params.name}}"></o-activities>
-              </paper-material>
+                <div>List of Goals</div>
+                <div>List of Projects</div>
+              </iron-pages>
             </section>
 
             <section data-route="single-goal">
