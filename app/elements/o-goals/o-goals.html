@@ -11,20 +11,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="o-goals">
   <template>
-    <style>
-      :host {
-        display: block;
+    <style is="custom-style">
+      body {
+        background-color: var(--paper-grey-50);
+      }
+      #cards {
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
       paper-card {
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
+      }
+      .avatar {
+        display: inline-block;
+        height: 64px;
+        width: 64px;
+        border-radius: 50%;
+        background: var(--paper-pink-500);
+        color: white;
+        line-height: 64px;
+        font-size: 30px;
+        text-align: center;
+      }
+      .fancy .title {
+        position: absolute;
+        top: 30px;
+        left: 100px;
+        color: var(--paper-indigo-500);
+      }
+      .fancy img {
+        width: 100%;
+      }
+      .fancy .big {
+        font-size: 22px;
+        padding: 8px 0 16px;
+        color: var(--google-grey-500);
+      }
+      .fancy .medium {
+        font-size: 16px;
+        padding-bottom: 8px;
+      }
+      .pink {
+        --paper-card-header-color: var(--paper-pink-500);
+      }
+      .card-actions {
+        color: #ECEDEF;
+      }
+      a {
+        color: #222;
+        text-decoration: none;
       }
     </style>
     <template is="dom-repeat" items="{{goals}}">
-      <a href="/goals/{{encodeId(item.id)}}">
-        <paper-card heading="{{item.name}}"></paper-card>
-      </a>
+      <paper-card>
+        <div class="card-content">
+          <paper-icon-button icon="icons:radio-button-unchecked" title="goal"></paper-icon-button>
+          <a href="/goals/{{encodeId(item.id)}}">{{item.name}}</a>
+        </div>
+        <div class="card-actions">
+          <paper-icon-button icon="favorite" title="favorite"></paper-icon-button>
+          <paper-icon-button icon="icons:bookmark" title="bookmark"></paper-icon-button>
+          <paper-icon-button icon="icons:alarm-on" title="activity"></paper-icon-button>
+          <paper-button onclick="decreaseShadow()" style="color: #8C8C8C">"UserId" "state"</paper-button>
+        </div>
+      </paper-card>
     </template>
+
   </template>
 
 
