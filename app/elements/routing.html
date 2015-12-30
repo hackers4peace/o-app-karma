@@ -66,11 +66,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.params = data.params;
     });
 
-    page('/users/:name', scrollToTop, function(data) {
+    page('/users/:id', scrollToTop, function(data) {
       app.route = 'single-person';
       app.params = data.params;
-      app.title = data.params.name
-      app.selected = 0
+      var presonId = atob(data.params.id);
+      app.person = _.find(app.users, function(user) {
+        return user.id === presonId;
+      });
+      app.title = app.person.name;
     });
 
     // add #! before urls

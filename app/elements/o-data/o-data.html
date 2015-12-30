@@ -49,7 +49,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           goals: {
             type: Array,
             notify: true
-
+          },
+          users: {
+            type: Array,
+            notify: true
           }
         },
         _onProjectIdChange: function(newVal, oldVal) {
@@ -66,6 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var self = this;
           this.set('goals', []);
           this.set('projects', []);
+          this.set('users', []);
 
           if (newVal && newVal !== oldVal) {
             this.loadUserData(newVal).then(function(projects) {
@@ -87,8 +91,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               return response.json();
             })
             .then(function(data) {
-              self.set('user.name', data['@graph'][0].name);
-              self.set('user.image', data['@graph'][0].image);
+              var user = {
+                id: profileId,
+                name: data['@graph'][0].name,
+                image: data['@graph'][0].image
+              };
+              self.user = user;
+              self.push('users', user);
+
+              console.log('users:', self.users);
 
               return data['@graph'][1].id;
             })
