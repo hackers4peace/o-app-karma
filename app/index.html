@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-    <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}"></o-data>
+    <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}" users="{{users}}"></o-data>
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
     <iron-localstorage name="data-storage" value="{{data}}"
         on-iron-localstorage-load-empty="initializeData"></iron-localstorage>
@@ -147,15 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="users">
-              <a href="/users/Elf">
-                <paper-card heading="Elf" style="width: 100%; margin-bottom: 20px;"></paper-card>
-              </a>
-              <a href="/users/Maciej">
-                <paper-card heading="Maciej" style="width: 100%; margin-bottom: 20px;"></paper-card>
-              </a>
-              <a href="/users/Sam">
-                <paper-card heading="Sam" style="width: 100%; margin-bottom: 20px;"></paper-card>
-              </a>
+              <o-users users="{{users}}"></o-users>
             </section>
 
             <section data-route="goals">
