@@ -31,9 +31,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-    app.fetchData().then(function(goals) {
-      app.goals = goals;
-    })
+    // app.fetchData().then(function(goals) {
+    //   app.goals = goals;
+    // })
   });
 
   // Main area's paper-scroll-header-panel custom condensing transformation of
@@ -93,35 +93,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.push('data.activities', app.currentActivity);
     //console.log(app.currentActivity);
     this.set('currentActivity', null);
-  }
-
-  app.fetchData = function () {
-    return fetch('https://graph.hackers4peace.net/067a78de-b582-4e6d-92b1-d8211d0adeb8/04343b0f-66b9-460a-887b-2fee7064a681#id')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        return data['@graph'][1].id;
-      })
-      .then(function (goalsId) {
-        return fetch(goalsId);
-      })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        var goals = data['@graph'][0].item;
-        var goalPromises = goals.map(function (goal) {
-          return fetch(goal)
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function (goal) {
-              return goal['@graph'][0];
-            })
-        });
-        return Promise.all(goalPromises);
-      });
   }
 
 })(document);

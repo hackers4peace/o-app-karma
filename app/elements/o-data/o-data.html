@@ -19,66 +19,144 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
   </template>
   <script>
-  (function() {
-    'use strict';
+    (function() {
+      'use strict';
 
-    Polymer({
-      is: 'o-data',
+      Polymer({
+        is: 'o-data',
 
-      properties: {
-        profileId: {
-          type: String,
-          notify: true
+        properties: {
+          personId: {
+            type: String,
+            notify: true,
+            observer: '_onPersonIdChange',
+          },
+          projectId: {
+            type: String,
+            observer: '_onProjectIdChange'
+          },
+          user: {
+            type: Object,
+            notify: true,
+            value: function() {return {}}
+          },
+
+          projects: {
+            type: Array,
+            notify: true
+
+          },
+          goals: {
+            type: Array,
+            notify: true
+
+          }
         },
-        projectId: {
-          type: String,
-          value: 'https://graph.hackers4peace.net/067a78de-b582-4e6d-92b1-d8211d0adeb8/04343b0f-66b9-460a-887b-2fee7064a681#id',
-          observer: '_onProjectIdChange(projectId)'
-        }
-        projects: {
-          type: Array,
-          notify: true
+        _onProjectIdChange: function(newVal, oldVal) {
+          var self = this;
+          if (newVal && newVal !== oldVal) {
+            this.loadProjectData(newVal).then(function() {
+              self.notifyPath('projects', self.projects);
+              console.log('project data loaded', self.projects.length);
+            });
+          }
         },
-        goals: {
-          type: Array,
-          notify: true
-        }
-      },
-      _onProjectIdChange: function (projectId) {
-        this.loadProject(projectId),then(function(data) {
-          this.goals = data;
-        })
-      },
-      loadProject: function(projectId) {
-          fetch(projectId)
+        _onPersonIdChange: function (newVal, oldVal) {
+          console.log('personId changed!', newVal);
+          var self = this;
+          this.set('goals', []);
+          this.set('projects', []);
+
+          if (newVal && newVal !== oldVal) {
+            this.loadUserData(newVal).then(function(projects) {
+               var promises = projects.map(function(project) {
+                 return self.loadProjectData(project.id);
+               })
+               return Promise.all(promises);
+             }).then(function () {
+               console.log('goals:', self.goals.length);
+             });
+            }
+         },
+        loadUserData: function(profileId) {
+          console.log('loading user data', profileId);
+
+          var self = this;
+          return fetch(profileId)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              self.set('user.name', data['@graph'][0].name);
+              self.set('user.image', data['@graph'][0].image);
+
+              return data['@graph'][1].id;
+            })
+            .then(function(goalsId) {
+              return fetch(goalsId);
+            })
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              var projects = data['@graph'][0].contains;
+
+              var projectPromises = projects.map(function(project) {
+                return fetch(project)
+                  .then(function(response) {
+                    return response.json();
+                  })
+                  .then(function(data) {
+                    return data['@graph'][0];
+                  })
+              });
+              return Promise.all(projectPromises);
+            })
+            .then(function(data) {
+              self.set('projects',  data);
+              return data;
+            });
+        },
+        loadProjectData: function(projectId) {
+
+          var self = this;
+          return fetch(projectId)
             .then(function(response) {
               return response.json();
             })
             .then(function(data) {
               return data['@graph'][1].id;
             })
-            .then(function (goalsId) {
+            .then(function(goalsId) {
               return fetch(goalsId);
             })
-            .then(function (response) {
+            .then(function(response) {
               return response.json();
             })
-            .then(function (data) {
+            .then(function(data) {
               var goals = data['@graph'][0].item;
-              var goalPromises = goals.map(function (goal) {
+              var goalPromises = goals.map(function(goal) {
                 return fetch(goal)
                   .then(function(response) {
                     return response.json();
                   })
-                  .then(function (goal) {
-                    return goal['@graph'][0];
+                  .then(function(goal) {
+                    var goal = goal['@graph'][0];
+                    goal.project = projectId;
+
+                    return goal;
                   })
               });
-              return Promise.all(goalPromises);
+              return Promise.all(goalPromises)
+                .then(function (data) {
+                   data.forEach(function(goal) {
+                     self.push('goals', goal);
+                   });
+                   return data;
+                });
             });
         }
-      }
-    });
-  })();
+      });
+    })();
   </script>
 </dom-module>

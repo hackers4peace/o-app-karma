@@ -30,12 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         personId: {
           type: String,
-          notify: true,
-          observer: '_onPersonIdChange'
+          observer: '_onPersonIdChange',
+          notify: true
         }
       },
       _onPersonIdChange: function(newVal, oldVal) {
-        console.log (newVal)
+      
       }
     });
   })();
