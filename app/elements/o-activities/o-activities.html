@@ -11,22 +11,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="o-activities">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-      paper-card {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-    </style>
-    <template is="dom-if" if="{{isGoalFilter}}">
-      <template is="dom-repeat" items="{{activities}}" filter="{{goalFilter(filterValue)}}">
-        <paper-card heading="{{item.action}}">
-          <div class="card-content">Person: {{item.actor}} | Start: {{item.start}} | End: {{item.end}}</div>
-        </paper-card>
-      </template>
+  <style is="custom-style">
+    body {
+      background-color: var(--paper-grey-50);
+    }
+    #cards {
+      @apply(--layout-vertical);
+      @apply(--center-justified);
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    paper-card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .avatar {
+      display: inline-block;
+      height: 64px;
+      width: 64px;
+      border-radius: 50%;
+      background: var(--paper-pink-500);
+      color: white;
+      line-height: 64px;
+      font-size: 30px;
+      text-align: center;
+    }
+    .fancy .title {
+      position: absolute;
+      top: 30px;
+      left: 100px;
+      color: var(--paper-indigo-500);
+    }
+    .fancy img {
+      width: 100%;
+    }
+    .fancy .big {
+      font-size: 22px;
+      padding: 8px 0 16px;
+      color: var(--google-grey-500);
+    }
+    .fancy .medium {
+      font-size: 16px;
+      padding-bottom: 8px;
+    }
+    .pink {
+      --paper-card-header-color: var(--paper-pink-500);
+    }
+    .card-actions {
+      color: #8C8C8C;
+    }
+    a {
+      color: #222;
+      text-decoration: none;
+    }
+  </style>
+  <template is="dom-if" if="{{isGoalFilter}}">
+    <template is="dom-repeat" items="{{activities}}" filter="{{goalFilter(filterValue)}}">
+      <paper-card>
+        <div class="card-content">
+          <paper-icon-button icon="icons:alarm-on" title="goal"></paper-icon-button>
+          <a href="/goals/{{encodeId(item.id)}}">{{item.action}}</a>
+        </div>
+        <div class="card-actions">
+          <paper-button onclick="decreaseShadow()">25min</paper-button>
+          <paper-button onclick="decreaseShadow()">{{item.actor}}</paper-button>
+        </div>
+      </paper-card>
     </template>
+  </template>
+
     <template is="dom-if" if="{{isPersonFilter}}">
       <template is="dom-repeat" items="{{activities}}" filter="{{personFilter(filterValue)}}">
         <paper-card heading="{{item.action}}">
