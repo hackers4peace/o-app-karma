@@ -58,22 +58,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .pink {
         --paper-card-header-color: var(--paper-pink-500);
       }
+      .card-actions {
+        color: #ECEDEF;
+      }
       a {
         color: #222;
         text-decoration: none;
       }
     </style>
-
-    <template is="dom-repeat" items="{{items}}">
-      <paper-card >
-        <a href="/goals/{{encodeId(item.id)}}">
-          <div class="card-content">
-            {{item.name}}
-          </div>
-        </a>
+    <template is="dom-repeat" items="{{goals}}">
+      <paper-card>
+        <div class="card-content">
+          <paper-icon-button icon="icons:radio-button-unchecked" title="goal"></paper-icon-button>
+          <a href="/goals/{{encodeId(item.id)}}">{{item.name}}</a>
+        </div>
         <div class="card-actions">
           <paper-icon-button icon="favorite" title="favorite"></paper-icon-button>
-          <paper-icon-button icon="cloud-download" title="pin"></paper-icon-button>
+          <paper-icon-button icon="icons:bookmark" title="bookmark"></paper-icon-button>
+          <paper-icon-button icon="icons:alarm-on" title="activity"></paper-icon-button>
+          <paper-button onclick="decreaseShadow()" style="color: #8C8C8C">"UserName" "state(wish,doing,done)"</paper-button>
         </div>
       </paper-card>
     </template>
