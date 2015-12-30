@@ -38,7 +38,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           user: {
             type: Object,
             notify: true,
-            value: function() {return {}}
+            value: function() {
+              return {}
+            }
           },
 
           projects: {
@@ -52,80 +54,146 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           users: {
             type: Array,
-            notify: true
+            notify: true,
+            value: function () {
+              return [];
+            }
+          },
+          documents: {
+            type: Object,
+            value: function () {
+              return {};
+            }
           }
         },
         _onProjectIdChange: function(newVal, oldVal) {
-          var self = this;
+          // var self = this;
+          // if (newVal && newVal !== oldVal) {
+          //   this.loadProjectData(newVal).then(function() {
+          //     self.notifyPath('projects', self.projects);
+          //     console.log('project data loaded', self.projects.length);
+          //   });
+          // }
+        },
+        _onPersonIdChange: function(newVal, oldVal) {
           if (newVal && newVal !== oldVal) {
-            this.loadProjectData(newVal).then(function() {
-              self.notifyPath('projects', self.projects);
-              console.log('project data loaded', self.projects.length);
-            });
+            var self = this;
+            var personId = newVal;
+            this.fetchPerson(personId).then(function(doc) {
+              var person = _.find(doc['@graph'], function(item) {
+                return item.id == personId;
+              });
+              self.user = person;
+              self.push('users', person);
+              self.documents[personId] = doc;
+
+              return doc;
+            })
+            .then(function(doc) {
+               return self.fetchPersonProjects(personId)
+            })
+            .then(function(projects) {
+                self.set('user.projects', projects);
+                return projects;
+            })
+            .then(function() {
+               return self.fetchPersonGoals(personId);
+            })
+            .then(function(goals) {
+                self.set('user.goals', goals);
+                return goals;
+            })
           }
         },
-        _onPersonIdChange: function (newVal, oldVal) {
-          console.log('personId changed!', newVal);
-          var self = this;
-          this.set('goals', []);
-          this.set('projects', []);
-          this.set('users', []);
-
-          if (newVal && newVal !== oldVal) {
-            this.loadUserData(newVal).then(function(projects) {
-               var promises = projects.map(function(project) {
-                 return self.loadProjectData(project.id);
-               })
-               return Promise.all(promises);
-             }).then(function () {
-               console.log('goals:', self.goals.length);
-             });
-            }
-         },
-        loadUserData: function(profileId) {
-          console.log('loading user data', profileId);
+        fetchPerson: function(profileId) {
 
           var self = this;
           return fetch(profileId)
             .then(function(response) {
               return response.json();
-            })
-            .then(function(data) {
-              var user = {
-                id: profileId,
-                name: data['@graph'][0].name,
-                image: data['@graph'][0].image
-              };
-              self.user = user;
-              self.push('users', user);
+            });
 
-              console.log('users:', self.users);
+          // .then(function(goalsId) {
+          //   var projectsContainer = _.find(data['@graph'], function(item) {
+          //      return item.rev && item.rev.indexOf('role:contributor') >= 0;
+          //   });
+          //
+          //   var goalsContainer = _.find(data['@graph'], function(item) {
+          //      return item.rev && item.rev.indexOf('role:assignee') >= 0;
+          //   });
+          //
+          //   return Promise.all([fetch(projectsContainer.id), fetch(goalsContainer.id)]);
+          // })
+          // .then(function(responses) {
+          //   return Promise.all([responses[0].json(), responses[1].json()]);
+          // })
+          // .then(function(array) {
+          //   var projects = array[0];
+          //   var goals = array[1];
+          //
+          //   var projectPromises = projects.map(function(project) {
+          //     return fetch(project)
+          //       .then(function(response) {
+          //         return response.json();
+          //       })
+          //       .then(function(data) {
+          //         return data['@graph'][0];
+          //       })
+          //   });
+          //   return Promise.all(projectPromises);
+          // })
+          // .then(function(data) {
+          //   self.set('projects',  data);
+          //   return data;
+          // });
+        },
+        fetchPersonProjects: function(personId) {
+            return this.fetchContainer(personId, {
+              rev: 'role:contributor'
+            })
+        },
+        fetchPersonGoals: function(personId) {
+            return this.fetchContainer(personId, {
+              rev: 'role:assignee'
+            })
+        },
+        fetchContainer: function(resourceId, link) {
+          var self = this;
+          var doc = this.documents[resourceId];
+          var container = _.find(doc['@graph'], function(item) {
+            if (link.rel) {
+              return item.rel && item.rel.indexOf(link.rel) >= 0;
+            } else {
+              return item.rev && item.rev.indexOf(link.rev) >= 0;
+            }
+          });
 
-              return data['@graph'][1].id;
-            })
-            .then(function(goalsId) {
-              return fetch(goalsId);
-            })
+          return fetch(container.id)
             .then(function(response) {
               return response.json();
             })
-            .then(function(data) {
-              var projects = data['@graph'][0].contains;
+            .then(function(doc) {
+              self.documents[container.id] = doc;
 
-              var projectPromises = projects.map(function(project) {
-                return fetch(project)
-                  .then(function(response) {
-                    return response.json();
-                  })
-                  .then(function(data) {
-                    return data['@graph'][0];
-                  })
+              container = _.find(doc['@graph'], function(item) {
+                return item.id === container.id;
               });
-              return Promise.all(projectPromises);
+
+              var elements = container.contains;
+              return Promise.all(elements.map(function(element) {
+                return fetch(element);
+              }));
             })
-            .then(function(data) {
-              self.set('projects',  data);
-              return data;
+            .then(function(responses) {
+              return Promise.all(responses.map(function(item) {
+                return item.json();
+              }));
+            })
+            .then(function(array) {
+              var elements = array.map(function(doc) {
+                return doc['@graph'][0]; //FIXME
+              });
+              return elements;
             });
         },
         loadProjectData: function(projectId) {
@@ -159,11 +227,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   })
               });
               return Promise.all(goalPromises)
-                .then(function (data) {
-                   data.forEach(function(goal) {
-                     self.push('goals', goal);
-                   });
-                   return data;
+                .then(function(data) {
+                  data.forEach(function(goal) {
+                    self.push('goals', goal);
+                  });
+                  return data;
                 });
             });
         }

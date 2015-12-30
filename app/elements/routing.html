@@ -69,9 +69,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/users/:id', scrollToTop, function(data) {
       app.route = 'single-person';
       app.params = data.params;
-      var presonId = atob(data.params.id);
+      app.presonId = atob(data.params.id);
       app.person = _.find(app.users, function(user) {
-        return user.id === presonId;
+        return user.id === app.presonId;
       });
       app.title = app.person.name;
     });
