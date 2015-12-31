@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-button>
       </div>
     </paper-card>
-    <o-activities activities="{{goal.activities}}" filter-type="goal" filter-value="{{goalId}}"></o-activities>
+    <o-activities activities="{{goal.activities}}"></o-activities>
   </template>
   <script>
   (function() {
@@ -42,9 +42,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         goal: {
           type: Object
         },
-        description: {
-          type: String
-        },
         activity: {
           type: Object,
           notify: true
@@ -52,14 +49,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       onActivityClick: function (e) {
-        console.log('goalId', this.goalId);
+        console.log('goalId', this.goal);
         this.activity = {
-          uuid: "b0cdd6a4-c850-4171-9957-b65d4c7ff973",
-          id: "http://localhost:5000/b0cdd6a4-c850-4171-9957-b65d4c7ff973",
           type: "Activity",
           action: "Coding",
-          icon : "icons:alarm-on",
-          object: this.goalId
+          object: this.goal.id
         };
       }
     });
