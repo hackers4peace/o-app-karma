@@ -85,15 +85,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   app.handleOnStart = function () {
-    this.set('currentActivity.start', new Date());
-    this.set('currentActivity.actor', app.data.personId);
+    this.set('currentActivity.startTime', (new Date()).toISOString());
+    this.set('currentActivity.actor', app.user.id);
   }
 
   app.handleOnStop = function () {
-    //console.log('stop1!!!!', app.currentActivity);
-    this.set('currentActivity.end',new Date());
-    this.push('data.activities', app.currentActivity);
-    //console.log(app.currentActivity);
+    this.set('currentActivity.endTime',(new Date()).toISOString());
+    this.push('user.activities', app.currentActivity);
     this.set('currentActivity', null);
   }
 

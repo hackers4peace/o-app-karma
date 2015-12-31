@@ -29,85 +29,127 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           user: {
             type: Object,
             notify: true,
-            value: function() {
-              return {}
-            }
+            value: {}
           },
 
           portal: {
             type: Object,
             notify: true,
-            value: function() {
-              return {}
-            }
+            value: {}
           },
 
           resource: {
             type: Object,
-            notify: true
+            notify: true,
+            value: {}
           },
 
           documents: {
             type: Object,
-            value: function () {
-              return {};
-            }
+            value: {}
           }
         },
         observers: [
-          'onUserChange(user.*)'
+          'onUserChange(user.*)',
+          'onResourceChange(resource.*)'
+          //'onUserActivityChange(user.activities)'
         ],
-
+        onUserActivityChange: function (changeRecord) {
+          console.log(this.user.activities);
+        },
         onUserChange: function(changeRecord) {
 
           if (changeRecord.path === 'user.id') {
             var userId = changeRecord.value;
             var self = this;
-            this.fetchPerson(userId).then(function(doc) {
-              var person = _.find(doc['@graph'], function(item) {
-                return item.id == userId;
-              });
-              self.user = person;
-              self.documents[userId] = doc;
+            this.fetchResource(userId).then(function(doc) {
+                var person = _.find(doc['@graph'], function(item) {
+                  return item.id == userId;
+                });
+                self.user = person;
+                self.documents[userId] = doc;
 
-              return doc;
-            })
-            .then(function() {
-               return self.fetchPersonProjects(userId)
-            })
-            .then(function(projects) {
+                return doc;
+              })
+              .then(function() {
+                return self.fetchPersonProjects(userId)
+              })
+              .then(function(projects) {
+                console.log('projectS!!!', projects)
                 self.set('user.projects', projects);
                 return projects;
-            })
-            .then(function() {
-               return self.fetchPersonGoals(userId);
-            })
-            .then(function(goals) {
+              })
+              .then(function() {
+                return self.fetchPersonGoals(userId);
+              })
+              .then(function(goals) {
                 self.set('user.goals', goals);
                 return goals;
-            })
-            .then(function(hack) {
-                 self.set('portal', self.user); //FIXME !
-            })
+              })
+              .then(function() {
+                return self.fetchPersonActivities(userId);
+              })
+              .then(function(activities) {
+                self.set('user.activities', activities);
+              })
+              .then(function(hack) {
+                self.set('portal', self.user); //FIXME !
+              })
           }
         },
-        fetchPerson: function(profileId) {
+        onResourceChange: function(changeRecord) {
+          if (changeRecord.path === 'resource.id') {
+            var resourceId = changeRecord.value;
+            var self = this;
+            self.fetchResource(resourceId).then(function(doc) {
+                var resource = _.find(doc['@graph'], function(item) {
+                  return item.id == resourceId;
+                });
 
-          var self = this;
-          return fetch(profileId)
+                self.resource = resource;
+                self.documents[resourceId] = doc;
+
+                return doc;
+              })
+              .then(function(doc) {
+                var container = _.find(doc['@graph'], function(item) {
+                  return item.rel && item.rel.indexOf('goal') >= 0;
+                });
+
+                if (container) {
+                  return self.fetchContainer(reso.id, {
+                    rel: 'goal'
+                  })
+                } else {
+                  return [];
+                }
+              })
+              .then(function(goals) {
+                self.set('resource.goals', goals);
+                return goals;
+              });
+          }
+        },
+        fetchResource: function(url) {
+          return fetch(url)
             .then(function(response) {
               return response.json();
             });
         },
         fetchPersonProjects: function(personId) {
-            return this.fetchContainer(personId, {
-              rev: 'role:contributor'
-            })
+          return this.fetchContainer(personId, {
+            rev: 'role:contributor'
+          })
         },
         fetchPersonGoals: function(personId) {
-            return this.fetchContainer(personId, {
-              rev: 'role:assignee'
-            })
+          return this.fetchContainer(personId, {
+            rev: 'role:assignee'
+          })
+        },
+        fetchPersonActivities: function(personId) {
+          return this.fetchContainer(personId, {
+            rev: 'actor'
+          })
         },
         fetchContainer: function(resourceId, link) {
           var self = this;

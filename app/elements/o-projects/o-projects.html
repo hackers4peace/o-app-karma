@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-card>
         <div class="card-content">
           <paper-icon-button icon="icons:work" title="project"></paper-icon-button>
-          <a href="/goals/{{encodeId(item.id)}}">{{item.name}}</a>
+          <a href="/projects/{{encodeId(item.id)}}">{{item.name}}</a>
         </div>
         <div class="card-actions">
           <paper-icon-button icon="favorite" title="favorite"></paper-icon-button>
@@ -101,7 +101,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
         encodeId: function(id) {
-          //return "12345";
           return btoa(id);
         }
       });

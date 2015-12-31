@@ -76,26 +76,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-decoration: none;
       }
     </style>
-    <template>
       <template is="dom-repeat" items="{{activities}}">
         <paper-card heading="{{item.action}}">
-          <div class="card-content">Person: {{item.actor}} | Start: {{item.start}} | End: {{item.end}}</div>
+          <div class="card-content">Person: {{item.actor}} | Start: {{item.startTime}} | End: {{item.endTime}}</div>
         </paper-card>
       </template>
     </template>
-
     <script>
       (function() {
-          'use strict';
-          Polymer({
-              is: 'o-activities',
-              properties: {
-                activities: {
-                  type: Array,
-                  notify: true
-                }
-              });
-          })();
+        'use strict';
+        Polymer({
+          is: 'o-activities',
+          properties: {
+            activities: {
+              type: Array,
+              notify: true
+            }
+          }
+        });
+      })();
     </script>
 
 </dom-module>

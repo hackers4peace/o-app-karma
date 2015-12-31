@@ -15,7 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div>
       <p>Choose an activity to start tracking your time<p>
       <template is="dom-repeat" items="{{availableActivities}}">
-        <paper-button raised on-click="onActivityClick" ><iron-icon icon="{{item.icon}}"></iron-icon>{{item.action}}</paper-button>
+        <paper-button raised on-click="onActivityClick" ><iron-icon icon="icons:alarm-on"></iron-icon>{{item.action}}</paper-button>
       </template>
     </div>
   </template>
@@ -38,40 +38,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
             value: [
               {
-                uuid: "b0cdd6a4-c850-4171-9957-b65d4c7ff973",
-                id: "http://localhost:5000/b0cdd6a4-c850-4171-9957-b65d4c7ff973",
                 type: "Activity",
-                action: "Coding",
-                icon : "icons:alarm-on"
+                action: "Coding"
               },
               {
-                uuid: "c0cdd1a4-c850-4171-9957-b65d4c7ff973",
-                id: "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
                 type: "Activity",
-                action: "Cooking",
-                icon : "icons:alarm-on"
+                action: "Cooking"
               },
               {
-                uuid: "d0cdd1a4-c850-4171-9957-b65d4c7ff973",
-                id: "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
                 type: "Activity",
-                action: "Eating",
-                icon : "icons:alarm-on"
+                action: "Eating"
               },
               {
-                uuid: "f0cdd1a4-c850-4171-9957-b65d4c7ff973",
-                id: "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
                 type: "Activity",
-                action: "Cleaning",
-                icon : "icons:alarm-on"
+                action: "Cleaning"
               },
               {
-                uuid: "f0cdd1a4-c850-4171-9957-b65d4c7ff973",
-                id: "http://localhost:5000/c0cdd3a4-c850-4171-9957-b65d4c7ff973",
                 type: "Activity",
-                action: "Sleeping",
-                icon : "icons:alarm-on"
-              },
+                action: "Sleeping"
+              }
             ]
           }
         },

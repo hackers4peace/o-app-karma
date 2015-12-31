@@ -17,7 +17,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <paper-tabs selected="{{selected}}">
+      <paper-tab>Activities</paper-tab>
+      <paper-tab>Goals</paper-tab>
+      <paper-tab>People</paper-tab>
+    </paper-tabs>
+
+    <iron-pages selected="{{selected}}">
+      <div>Activities</div>
+      <div><o-goals goals="{{project.goals}}" ></o-goals></div>
+      <div><o-projects projects="{{project.people}}"></o-projects></div>
+    </iron-pages>
   </template>
   <script>
   (function() {
@@ -27,10 +37,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'o-project',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'o-project',
-          notify: true
+        project: {
+          type: Object
         }
       }
     });
