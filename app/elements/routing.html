@@ -28,8 +28,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.title = 'Welcome to Avocados';
     });
 
-    page('/users', scrollToTop, function() {
-      app.route = 'users';
+    page('/people', scrollToTop, function() {
+      app.route = 'people';
       app.title = 'People';
     });
 
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.params = data.params;
     });
 
-    page('/users/:id', scrollToTop, function(data) {
+    page('/people/:id', scrollToTop, function(data) {
       app.route = 'single-person';
       app.params = data.params;
       app.presonId = atob(data.params.id);

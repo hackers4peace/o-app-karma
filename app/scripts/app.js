@@ -30,10 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
-    // imports are loaded and elements have been registered
-    // app.fetchData().then(function(goals) {
-    //   app.goals = goals;
-    // })
+    var user = {
+      id: 'https://idp.wwelves.org/ef093385-8906-4c78-9a69-9217c76013a8#id',
+      activities: [] //FIXME
+    };
+    app.set('user', user);
+    app.set('user.id', user.id);
   });
 
   // Main area's paper-scroll-header-panel custom condensing transformation of
@@ -76,9 +78,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.initializeData = function() {
     console.log('initialization');
-    app.data = {
-      personId: 'Bob',
-      activities: []
+    app.user = {
+      id: '',
+      activities: [] //FIXME
     }
   }
 

@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-button>
       </div>
     </paper-card>
-    <o-activities activities="{{activities}}" filter-type="goal" filter-value="{{goalId}}"></o-activities>
+    <o-activities activities="{{goal.activities}}" filter-type="goal" filter-value="{{goalId}}"></o-activities>
   </template>
   <script>
   (function() {
@@ -39,18 +39,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'o-goal',
 
       properties: {
-        goalId: {
-          type: String
+        goal: {
+          type: Object
         },
         description: {
-          type: String,
+          type: String
         },
         activity: {
           type: Object,
-          notify: true
-        },
-        activities: {
-          type: Array,
           notify: true
         }
       },

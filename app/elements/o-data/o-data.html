@@ -26,15 +26,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'o-data',
 
         properties: {
-          personId: {
-            type: String,
-            notify: true,
-            observer: '_onPersonIdChange',
-          },
-          projectId: {
-            type: String,
-            observer: '_onProjectIdChange'
-          },
           user: {
             type: Object,
             notify: true,
@@ -43,22 +34,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           },
 
-          projects: {
-            type: Array,
-            notify: true
-
-          },
-          goals: {
-            type: Array,
-            notify: true
-          },
-          users: {
-            type: Array,
+          portal: {
+            type: Object,
             notify: true,
-            value: function () {
-              return [];
+            value: function() {
+              return {}
             }
           },
+
+          resource: {
+            type: Object,
+            notify: true
+          },
+
           documents: {
             type: Object,
             value: function () {
@@ -66,42 +54,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
           }
         },
-        _onProjectIdChange: function(newVal, oldVal) {
-          // var self = this;
-          // if (newVal && newVal !== oldVal) {
-          //   this.loadProjectData(newVal).then(function() {
-          //     self.notifyPath('projects', self.projects);
-          //     console.log('project data loaded', self.projects.length);
-          //   });
-          // }
-        },
-        _onPersonIdChange: function(newVal, oldVal) {
-          if (newVal && newVal !== oldVal) {
+        observers: [
+          'onUserChange(user.*)'
+        ],
+
+        onUserChange: function(changeRecord) {
+
+          if (changeRecord.path === 'user.id') {
+            var userId = changeRecord.value;
             var self = this;
-            var personId = newVal;
-            this.fetchPerson(personId).then(function(doc) {
+            this.fetchPerson(userId).then(function(doc) {
               var person = _.find(doc['@graph'], function(item) {
-                return item.id == personId;
+                return item.id == userId;
               });
               self.user = person;
-              self.push('users', person);
-              self.documents[personId] = doc;
+              self.documents[userId] = doc;
 
               return doc;
             })
-            .then(function(doc) {
-               return self.fetchPersonProjects(personId)
+            .then(function() {
+               return self.fetchPersonProjects(userId)
             })
             .then(function(projects) {
                 self.set('user.projects', projects);
                 return projects;
             })
             .then(function() {
-               return self.fetchPersonGoals(personId);
+               return self.fetchPersonGoals(userId);
             })
             .then(function(goals) {
                 self.set('user.goals', goals);
                 return goals;
+            })
+            .then(function(hack) {
+                 self.set('portal', self.user); //FIXME !
             })
           }
         },
@@ -112,40 +98,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .then(function(response) {
               return response.json();
             });
-
-          // .then(function(goalsId) {
-          //   var projectsContainer = _.find(data['@graph'], function(item) {
-          //      return item.rev && item.rev.indexOf('role:contributor') >= 0;
-          //   });
-          //
-          //   var goalsContainer = _.find(data['@graph'], function(item) {
-          //      return item.rev && item.rev.indexOf('role:assignee') >= 0;
-          //   });
-          //
-          //   return Promise.all([fetch(projectsContainer.id), fetch(goalsContainer.id)]);
-          // })
-          // .then(function(responses) {
-          //   return Promise.all([responses[0].json(), responses[1].json()]);
-          // })
-          // .then(function(array) {
-          //   var projects = array[0];
-          //   var goals = array[1];
-          //
-          //   var projectPromises = projects.map(function(project) {
-          //     return fetch(project)
-          //       .then(function(response) {
-          //         return response.json();
-          //       })
-          //       .then(function(data) {
-          //         return data['@graph'][0];
-          //       })
-          //   });
-          //   return Promise.all(projectPromises);
-          // })
-          // .then(function(data) {
-          //   self.set('projects',  data);
-          //   return data;
-          // });
         },
         fetchPersonProjects: function(personId) {
             return this.fetchContainer(personId, {
@@ -194,45 +146,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 return doc['@graph'][0]; //FIXME
               });
               return elements;
-            });
-        },
-        loadProjectData: function(projectId) {
-
-          var self = this;
-          return fetch(projectId)
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(data) {
-              return data['@graph'][1].id;
-            })
-            .then(function(goalsId) {
-              return fetch(goalsId);
-            })
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(data) {
-              var goals = data['@graph'][0].contains;
-              var goalPromises = goals.map(function(goal) {
-                return fetch(goal)
-                  .then(function(response) {
-                    return response.json();
-                  })
-                  .then(function(goal) {
-                    var goal = goal['@graph'][0];
-                    goal.project = projectId;
-
-                    return goal;
-                  })
-              });
-              return Promise.all(goalPromises)
-                .then(function(data) {
-                  data.forEach(function(goal) {
-                    self.push('goals', goal);
-                  });
-                  return data;
-                });
             });
         }
       });

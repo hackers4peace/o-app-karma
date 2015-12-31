@@ -78,10 +78,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-    <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}" users="{{users}}" user="{{user}}"></o-data>
+    <!-- <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}" users="{{users}}" user="{{user}}"></o-data> -->
+    <o-data user="{{user}}" portal="{{portal}}" resource="{{resource}}"></o-data>
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
-    <iron-localstorage name="data-storage" value="{{data}}"
-        on-iron-localstorage-load-empty="initializeData"></iron-localstorage>
+    <!-- <iron-localstorage name="data-storage" value="{{user}}"
+        on-iron-localstorage-load-empty="initializeData"></iron-localstorage> -->
 
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
@@ -93,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Home</span>
           </a>
 
-          <a data-route="users" href="/users" on-click="onDataRouteClick">
+          <a data-route="people" href="/people" on-click="onDataRouteClick">
             <iron-icon icon="icons:face"></iron-icon>
             <span>People</span>
           </a>
@@ -139,28 +140,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <section data-route="home">
               <paper-material elevation="1">
-                <o-identifier person-id="{{data.personId}}"></o-identifier>
+                <o-identifier user="{{user}}"></o-identifier>
               </paper-material>
               <paper-material elevation="1">
                 <o-selector activity="{{currentActivity}}"></o-selector>
               </paper-material>
+              <paper-material>
+                <o-user user="{{user}}"></o-user>
+              </paper-material>
             </section>
 
-            <section data-route="users">
-              <o-users users="{{users}}"></o-users>
+            <section data-route="people">
+              <o-users users="{{portal.people}}"></o-users>
             </section>
 
             <section data-route="goals">
-              <o-goals goals="{{goals}}"></o-goals>
+              <o-goals goals="{{portal.goals}}"></o-goals>
             </section>
 
             <section data-route="activities">
-              <o-activities activities="{{data.activities}}"></o-activities>
+              <o-activities activities="{{portal.activities}}"></o-activities>
             </section>
 
             <section data-route="projects">
 
-              <o-projects projects="{{projects}}"></o-projects>
+              <o-projects projects="{{portal.projects}}"></o-projects>
 
             </section>
 
@@ -171,11 +175,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="single-person">
-              <o-user user="{{user}}"></o-user>
+              <o-user user="{{resource}}"></o-user>
             </section>
 
             <section data-route="single-goal">
-              <o-goal goal-id="{{goal.id}}" activity={{currentActivity}} activities={{data.activities}}></o-goal>
+              <o-goal goal="{{resource}}" activity="{{currentActivity}}"></o-goal>
             </section>
 
           </iron-pages>

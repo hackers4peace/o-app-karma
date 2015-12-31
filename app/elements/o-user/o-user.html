@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-pages selected="{{selected}}">
       <div>Activities</div>
-      <div><o-goals goals="{{user.goals}}"></o-goals></div>
+      <div><o-goals goals="{{user.goals}}" ></o-goals></div>
       <div><o-projects projects="{{user.projects}}"></o-projects></div>
     </iron-pages>
   </template>
@@ -38,8 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         user: {
-          type: Object,
-          notify: true
+          type: Object
         }
       }
     });
