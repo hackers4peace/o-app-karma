@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
     <!-- <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}" users="{{users}}" user="{{user}}"></o-data> -->
-    <o-data user="{{user}}" portal="{{portal}}" subject="{{subject}}"></o-data>
+    <o-data user="{{user}}" subject="{{subject}}"></o-data>
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
     <!-- <iron-localstorage name="data-storage" value="{{user}}"
         on-iron-localstorage-load-empty="initializeData"></iron-localstorage> -->
@@ -88,38 +88,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
         <!-- Drawer Content -->
-        <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
-          <a data-route="home" href="/" on-click="onDataRouteClick">
-            <iron-icon icon="home"></iron-icon>
-            <span>Home</span>
-          </a>
-
-          <a data-route="people" href="/people" on-click="onDataRouteClick">
-            <iron-icon icon="icons:face"></iron-icon>
-            <span>People</span>
-          </a>
-
-          <a data-route="organisations" href="/organisations" on-click="onDataRouteClick">
-            <iron-icon icon="icons:dashboard"></iron-icon>
-            <span>Organisations</span>
-          </a>
-
-          <a data-route="projects" href="/projects" on-click="onDataRouteClick">
-            <iron-icon icon="icons:work"></iron-icon>
-            <span>Projects</span>
-          </a>
-
-          <a data-route="goals" href="/goals" on-click="onDataRouteClick">
-            <iron-icon icon="icons:radio-button-checked"></iron-icon>
-            <span>Goals</span>
-          </a>
-
-          <a data-route="activities" href="/activities" on-click="onDataRouteClick">
-            <iron-icon icon="icons:alarm-on"></iron-icon>
-            <span>Activities</span>
-          </a>
-
-        </paper-menu>
+      <img src="{{subject.image}}" style="width:200px;height:200px">
+      <o-type-selector subject="{{subject}}" on-type-selected="onTypeSelected"></o-type-selector>
       </paper-scroll-header-panel>
 
       <!-- Main Area -->
@@ -129,65 +99,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-toolbar id="mainToolbar">
 
           <paper-icon-button icon="menu" id="paperToggle" paper-drawer-toggle></paper-icon-button>
-            <div class="title">{{title}}</div>
+            <div class="title">{{subject.name}}</div>
           <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
 
         </paper-toolbar>
 
         <!-- Main Content -->
         <div class="content">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+          <section>
+            <paper-material elevation="1">
 
-            <section data-route="home">
-              <paper-material elevation="1">
-                <o-identifier user="{{user}}"></o-identifier>
-              </paper-material>
-              <paper-material elevation="1">
-                <o-selector activity="{{currentActivity}}"></o-selector>
-              </paper-material>
-              <paper-material>
-                <o-user user="{{user}}"></o-user>
-              </paper-material>
-            </section>
-
-            <section data-route="people">
-              <o-users users="{{portal.people}}"></o-users>
-            </section>
-
-            <section data-route="goals">
-              <o-goals goals="{{portal.goals}}"></o-goals>
-            </section>
-
-            <section data-route="activities">
-              <o-activities activities="{{portal.activities}}"></o-activities>
-            </section>
-
-            <section data-route="projects">
-
-              <o-projects projects="{{portal.projects}}"></o-projects>
-
-            </section>
-
-            <section data-route="organisations">
-              <a href="#">
-                <paper-card heading="orga name" style="width: 100%; margin-bottom: 20px;"></paper-card>
-              </a>
-            </section>
-
-            <section data-route="single-person">
-              <o-user user="{{subject}}"></o-user>
-            </section>
-
-            <section data-route="single-goal">
-              <o-goal goal="{{subject}}" activity="{{currentActivity}}"></o-goal>
-            </section>
-
-            <section data-route="single-project">
-              <o-project project="{{subject}}"></o-user>
-            </section>
-
-
-          </iron-pages>
+              <o-identifier user="{{user}}" show$="{{!user}}"></o-identifier>
+              <paper-button raised on-click="onActivityClick">
+                <iron-icon icon="icons:alarm-on"></iron-icon>Start
+              </paper-button>
+              <o-list items="{{subject.dataSelection}}" on-item-selected="onSubjectChange"></o-list>
+            </paper-material>
+          </section>
         </div>
 
         <o-timer activity="{{currentActivity}}" on-start="handleOnStart" on-stop="handleOnStop"></o-timer>

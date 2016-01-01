@@ -32,12 +32,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: {}
           },
 
-          portal: {
-            type: Object,
-            notify: true,
-            value: {}
-          },
-
           subject: {
             type: Object,
             notify: true,
@@ -97,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 self.set('user.activities', activities);
               })
               .then(function(hack) {
-                self.set('portal', self.user); //FIXME !
+                self.set('subject', self.user); //FIXME !
               })
           }
         },
@@ -121,7 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 });
 
                 if (container) {
-                  return self.fetchContainer(reso.id, {
+                  return self.fetchContainer(subjectId, {
                     rel: 'goal'
                   });
                 } else {

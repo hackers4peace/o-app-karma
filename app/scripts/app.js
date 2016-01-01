@@ -30,14 +30,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
-    var user = {
-      id: 'https://idp.wwelves.org/ef093385-8906-4c78-9a69-9217c76013a8#id',
-      activities: [] //FIXME
-    };
-    app.set('user', user);
-    app.set('user.id', user.id);
-  });
 
+    app.set('user', app.user);
+    app.set('user.id', app.user.id);
+  });
+//
   // Main area's paper-scroll-header-panel custom condensing transformation of
   // the appName in the middle-container and the bottom title in the bottom-container.
   // The appName is moved to top and shrunk on condensing. The bottom sub title
@@ -64,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
-  app.onDataRouteClick = function() {
+  app.closeDrawer = function() {
     var drawerPanel = document.querySelector('#paperDrawerPanel');
     if (drawerPanel.narrow) {
       drawerPanel.closeDrawer();
@@ -93,6 +90,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     this.set('currentActivity.endTime',(new Date()).toISOString());
     this.push('user.activities', app.currentActivity);
     this.set('currentActivity', null);
+  }
+  app.user = {
+    id: 'https://idp.wwelves.org/ef093385-8906-4c78-9a69-9217c76013a8#id',
+    activities: []
+  }
+
+  app.onTypeSelected = function(e, detail) {
+    app.closeDrawer();
+
+    switch (detail) {
+      case 'Goal':
+        app.set('subject.dataSelection', app.subject.goals);
+        break;
+
+      case 'Project':
+        app.set('subject.dataSelection', app.subject.projects);
+        break;
+
+       case 'Activity':
+        app.set('subject.dataSelection', app.subject.activities);
+        break;
+    }
+  }
+  app.onSubjectChange = function (e, detail) {
+    if (detail && detail.id) {
+      this.set('subject.id', detail.id); //FIXME remove suprise
+    }
+  }
+
+  app.onActivityClick = function (e) {
+    app.currentActivity = {
+      type: "Activity",
+      object: this.subject.id
+    };
   }
 
 })(document);

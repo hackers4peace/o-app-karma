@@ -24,53 +24,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // Routes
     page('/', scrollToTop, function() {
-      app.route = 'home';
       app.title = 'Welcome to Avocados';
     });
 
-    page('/people', scrollToTop, function() {
-      app.route = 'people';
-      app.title = 'People';
-    });
-
-    page('/goals', scrollToTop, function() {
-      app.route = 'goals';
-      app.title = 'Goals';
-    });
-
-    page('/activities', scrollToTop, function() {
-      app.route = 'activities';
-      app.title = 'Activities';
-    });
-
-    page('/projects', scrollToTop, function() {
-      app.route = 'projects';
-      app.title = 'Projects';
-    });
-
-    page('/organisations', scrollToTop, function() {
-      app.route = 'organisations';
-      app.title = 'Organisations';
-    });
-
-
-    page('/goals/:id', scrollToTop, function(data) {
-      app.route = 'single-goal';
-      app.set('subject.id', atob(data.params.id));
-    });
-
-    // page('/people/:id', scrollToTop, function(data) {
-    //   app.route = 'single-person';
-    //   app.params = data.params;
-    //   var personId = atob(data.params.id);
-    //   app.response = _.find(app.portal.users, function(user) {
-    //     return user.id === personId;
-    //   });
-    //   app.title = app.person.name;
-    // });
-
-    page('/projects/:id', scrollToTop, function(data) {
-      app.route = 'single-project';
+    page('/subject/:id', scrollToTop, function(data) {
       app.set('subject.id', atob(data.params.id));
     });
 
