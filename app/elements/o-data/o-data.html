@@ -38,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: {}
           },
 
-          resource: {
+          subject: {
             type: Object,
             notify: true,
             value: {}
@@ -51,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         observers: [
           'onUserChange(user.*)',
-          'onResourceChange(resource.*)',
+          'onSubjectChange(subject.*)',
           'onUserActivityChange(user.activities.*)'
         ],
         onUserActivityChange: function (changeRecord) {
@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (changeRecord.path === 'user.id') {
             var userId = changeRecord.value;
             var self = this;
-            this.fetchResource(userId).then(function(doc) {
+            this.fetchSubject(userId).then(function(doc) {
                 var person = _.find(doc['@graph'], function(item) {
                   return item.id == userId;
                 });
@@ -101,17 +101,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               })
           }
         },
-        onResourceChange: function(changeRecord) {
-          if (changeRecord.path === 'resource.id') {
-            var resourceId = changeRecord.value;
+        onSubjectChange: function(changeRecord) {
+          if (changeRecord.path === 'subject.id') {
+            var subjectId = changeRecord.value;
             var self = this;
-            self.fetchResource(resourceId).then(function(doc) {
-                var resource = _.find(doc['@graph'], function(item) {
-                  return item.id == resourceId;
+            self.fetchSubject(subjectId).then(function(doc) {
+                var subject = _.find(doc['@graph'], function(item) {
+                  return item.id == subjectId;
                 });
 
-                self.resource = resource;
-                self.documents[resourceId] = doc;
+                self.subject = subject;
+                self.documents[subjectId] = doc;
 
                 return doc;
               })
@@ -130,14 +130,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               })
               .then(function(goals) {
                 if (goals !== null) {
-                  self.set('resource.goals', goals);
+                  self.set('subject.goals', goals);
                 }
 
                 return goals;
               });
           }
         },
-        fetchResource: function(url) {
+        fetchSubject: function(url) {
           return fetch(url)
             .then(function(response) {
               return response.json();
@@ -158,9 +158,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             rev: 'actor'
           })
         },
-        fetchContainer: function(resourceId, link) {
+        fetchContainer: function(subjectId, link) {
           var self = this;
-          var doc = this.documents[resourceId];
+          var doc = this.documents[subjectId];
           var container = _.find(doc['@graph'], function(item) {
             if (link.rel) {
               return item.rel && item.rel.indexOf(link.rel) >= 0;

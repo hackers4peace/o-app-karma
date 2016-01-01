@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
     <!-- <o-data goals="{{goals}}" projects="{{projects}}" person-id="{{data.personId}}" users="{{users}}" user="{{user}}"></o-data> -->
-    <o-data user="{{user}}" portal="{{portal}}" resource="{{resource}}"></o-data>
+    <o-data user="{{user}}" portal="{{portal}}" subject="{{subject}}"></o-data>
     <!-- <polymer-localforage value="{{personId}}"></polymer-localforage> -->
     <!-- <iron-localstorage name="data-storage" value="{{user}}"
         on-iron-localstorage-load-empty="initializeData"></iron-localstorage> -->
@@ -175,15 +175,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="single-person">
-              <o-user user="{{resource}}"></o-user>
+              <o-user user="{{subject}}"></o-user>
             </section>
 
             <section data-route="single-goal">
-              <o-goal goal="{{resource}}" activity="{{currentActivity}}"></o-goal>
+              <o-goal goal="{{subject}}" activity="{{currentActivity}}"></o-goal>
             </section>
 
             <section data-route="single-project">
-              <o-project project="{{resource}}"></o-user>
+              <o-project project="{{subject}}"></o-user>
             </section>
 
 

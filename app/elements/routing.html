@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/goals/:id', scrollToTop, function(data) {
       app.route = 'single-goal';
-      app.set('resource.id', atob(data.params.id));
+      app.set('subject.id', atob(data.params.id));
     });
 
     // page('/people/:id', scrollToTop, function(data) {
@@ -71,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/projects/:id', scrollToTop, function(data) {
       app.route = 'single-project';
-      app.set('resource.id', atob(data.params.id));
+      app.set('subject.id', atob(data.params.id));
     });
 
     // add #! before urls
