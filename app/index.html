@@ -98,15 +98,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-drawer-panel id="paperDrawerPanelLeft" drawer-toggle-attribute="paper-drawer-left">
 
             <paper-scroll-header-panel drawer>
-              <img src="{{subject.image}}" style="width:255px;height:255px">
+              <img src="{{subject.image}}" hidden$="{{!subject.image}}" style="width:255px;height:255px">
               <o-type-selector subject="{{subject}}" on-type-selected="onTypeSelected"></o-type-selector>
             </paper-scroll-header-panel>
 
             <paper-scroll-header-panel main>
              <paper-drawer-panel id="paperDrawerPanelRight" right-drawer drawer-toggle-attribute="paper-drawer-right" >
-               <div drawer> right drawer panel... </div>
+               <div style="border-left: 1px solid #ccc;" drawer> right drawer panel... </div>
                <div main>
-                 <div class="content">
+                 <div class="content" style="overflow-y: scroll;padding: 10px 20px">
                    <section>
                      <paper-material elevation="1">
                        <o-identifier user="{{user}}" show$="{{!user}}"></o-identifier>
