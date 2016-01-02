@@ -19,18 +19,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div>
       <paper-menu class="list">
-        <paper-icon-item on-click="onClick" data-type="Project">
-          <iron-icon icon="icons:work" item-icon></iron-icon>
-          <span>Projects</span>
-        </paper-icon-item>
-        <paper-icon-item on-click="onClick" data-type="Goal">
-          <iron-icon icon="icons:radio-button-checked" item-icon></iron-icon>
-          <span>Goals</span>
-        </paper-icon-item>
-        <paper-icon-item on-click="onClick" data-type="Activity">
-          <iron-icon icon="icons:alarm-on" item-icon></iron-icon>
-          <span>Activities</span>
-        </paper-icon-item>
+        <template is="dom-repeat" items="{{_subjects}}">
+          <paper-icon-item on-click="onClick">
+            <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
+            <span>{{item.text}}</span>
+          </paper-icon-item>
+        </template>
+
       </paper-menu>
     </div>
   </template>
@@ -42,12 +37,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'o-type-selector',
 
         properties: {
-          subject: {
-            type: Object
+          _subjects: {
+            type: Array,
+            value: [
+              {
+                text: 'Projects',
+                subject: 'Project',
+                icon: 'icons:work'
+              },
+              {
+                text: 'Goals',
+                subject: 'Goal',
+                icon: 'icons:radio-button-checked'
+              },
+              {
+                text: 'Activities',
+                subject: 'Activity',
+                icon: 'icons:alarm-on'
+              }
+            ]
           }
         },
         onClick: function(e) {
-          this.fire('type-selected',  e.target.getAttribute('data-type'));
+          this.fire('type-selected', e.model.item);
         }
       });
     })();
