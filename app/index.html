@@ -87,41 +87,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-scroll-header-panel fixed>
 
       <paper-toolbar class="top-toolbar">
-        <paper-icon-button icon="menu" id="paperToggle" paper-drawer-toggle></paper-icon-button>
+        <paper-icon-button icon="icons:work"></paper-icon-button>
         <h2>{{subject.name}}</h2>
         <span class="flex"></span>
         <pa-auth-info location='{{location}}' user="{{user}}"  profile='{{profile}}' on-sign-out="signOut" on-sign-in="signIn"></pa-auth-info>
       </paper-toolbar>
       <div class="layout vertical fit">
         <div class="layout flex">
-          <paper-drawer-panel id="paperDrawerPanel">
+
+          <paper-drawer-panel id="paperDrawerPanel" drawer-toggle-attribute="paper-drawer-left">
 
             <paper-scroll-header-panel drawer>
               <img src="{{subject.image}}" style="width:255px;height:255px">
               <o-type-selector subject="{{subject}}" on-type-selected="onTypeSelected"></o-type-selector>
-
             </paper-scroll-header-panel>
 
             <paper-scroll-header-panel main>
-
-              <div class="content">
-                <section>
-                  <paper-material elevation="1">
-
-                    <o-identifier user="{{user}}" show$="{{!user}}"></o-identifier>
-                    <paper-button raised on-click="onActivityClick">
-                      <iron-icon icon="icons:alarm-on"></iron-icon>Start
-                    </paper-button>
-                    <o-list items="{{subject.dataSelection}}" on-item-selected="onSubjectChange"></o-list>
-                  </paper-material>
-                </section>
-              </div>
-
+             <paper-drawer-panel right-drawer drawer-toggle-attribute="paper-drawer-right" >
+               <div drawer> right drawer panel... </div>
+               <div main>
+                 <div class="content">
+                   <section>
+                     <paper-material elevation="1">
+                       <o-identifier user="{{user}}" show$="{{!user}}"></o-identifier>
+                     </paper-material>
+                     <o-list items="{{subject.dataSelection}}" on-item-selected="onSubjectChange"></o-list>
+                   </section>
+                </div>
+               </div>
+             </paper-drawer-panel>
             </paper-scroll-header-panel>
           </paper-drawer-panel>
         </div>
-        
-        <paper-toolbar><paper-icon-button icon="menu" id="paperToggle" paper-drawer-toggle></paper-icon-button></paper-toolbar>
+
+        <paper-toolbar>
+          <paper-icon-button icon="menu" paper-drawer-left></paper-icon-button>
+          <span class="flex">
+            <paper-button raised on-click="onActivityClick">
+              <iron-icon icon="icons:alarm-on"></iron-icon>Start
+            </paper-button>
+          </span>
+          <paper-icon-button icon="menu" paper-drawer-right></paper-icon-button>
+        </paper-toolbar>
       </div>
 
       <o-timer activity="{{currentActivity}}" on-start="handleOnStart" on-stop="handleOnStop"></o-timer>
