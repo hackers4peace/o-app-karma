@@ -57,8 +57,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
         onUserChange: function(changeRecord) {
-
           if (changeRecord.path === 'user.id') {
+            console.log('changeRecord', changeRecord.path);
             var userId = changeRecord.value;
             var self = this;
             this.fetchSubject(userId).then(function(doc) {
@@ -162,6 +162,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               return item.rev && item.rev.indexOf(link.rev) >= 0;
             }
           });
+
+          if (!container) {
+            console.log('container not found', link);
+            return Promise.resolve([]);
+          }
 
           return fetch(container.id)
             .then(function(response) {
