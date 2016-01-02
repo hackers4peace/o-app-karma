@@ -11,22 +11,78 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="o-list">
   <template>
-    <style>
-      :host {
-        display: block;
+    <style is="custom-style">
+      body {
+        background-color: var(--paper-grey-50);
+      }
+      #cards {
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
       paper-card {
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
+      }
+      .avatar {
+        display: inline-block;
+        height: 64px;
+        width: 64px;
+        border-radius: 50%;
+        background: var(--paper-pink-500);
+        color: white;
+        line-height: 64px;
+        font-size: 30px;
+        text-align: center;
+      }
+      .fancy .title {
+        position: absolute;
+        top: 30px;
+        left: 100px;
+        color: var(--paper-indigo-500);
+      }
+      .fancy img {
+        width: 100%;
+      }
+      .fancy .big {
+        font-size: 22px;
+        padding: 8px 0 16px;
+        color: var(--google-grey-500);
+      }
+      .fancy .medium {
+        font-size: 16px;
+        padding-bottom: 8px;
+      }
+      .pink {
+        --paper-card-header-color: var(--paper-pink-500);
+      }
+      a {
+        color: #222;
+        text-decoration: none;
       }
     </style>
     <template is="dom-repeat" items="{{items}}">
-      <template is="dom-if" if="{{isActivity(item)}}">
-        <paper-card heading="{{item.startTime}}"></paper-card>
-      </template>
-      <template is="dom-if" if="{{!isActivity(item)}}">
-        <paper-card heading="{{item.name}}" on-click="onClick"></paper-card>
-      </template>
+      <paper-card >
+
+        <div class="card-content">
+          <template is="dom-if" if="{{isActivity(item)}}">
+            {{item.startTime}}
+          </template>
+          <template is="dom-if" if="{{!isActivity(item)}}">
+            <div on-click="onClick">
+              {{item.name}}
+            </div>
+          </template>
+        </div>
+
+        <div class="card-actions">
+          <paper-icon-button icon="favorite" title="favorite"></paper-icon-button>
+          <paper-icon-button icon="cloud-download" title="pin"></paper-icon-button>
+        </div>
+      </paper-card>
+
 
     </template>
   </template>
