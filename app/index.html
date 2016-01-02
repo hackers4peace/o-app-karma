@@ -84,6 +84,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- <iron-localstorage name="data-storage" value="{{user}}"
         on-iron-localstorage-load-empty="initializeData"></iron-localstorage> -->
 
+    <!-- Main Toolbar -->
+    <paper-toolbar id="mainToolbar">
+
+      <paper-icon-button icon="menu" id="paperToggle" paper-drawer-toggle></paper-icon-button>
+        <div class="title">{{subject.name}}</div>
+      <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
+
+    </paper-toolbar>
+    
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
@@ -95,14 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Main Area -->
       <paper-scroll-header-panel main fixed>
 
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar">
 
-          <paper-icon-button icon="menu" id="paperToggle" paper-drawer-toggle></paper-icon-button>
-            <div class="title">{{subject.name}}</div>
-          <paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
-
-        </paper-toolbar>
 
         <!-- Main Content -->
         <div class="content">
