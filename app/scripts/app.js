@@ -60,12 +60,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
   });
 
-  // Close drawer after menu item is selected if drawerPanel is narrow
-  app.closeDrawer = function() {
-    var drawerPanel = document.querySelector('#paperDrawerPanel');
-    if (drawerPanel.narrow) {
-      drawerPanel.closeDrawer();
-    }
+  // Close ldrawer after menu item is selected if drawerPanel is narrow
+  app.toggleDrawerPanel = function (panelId) {
+    var drawerPanel = document.querySelector(panelId);
+    drawerPanel.togglePanel();
+  }
+
+  app.toggleDrawerPanelLeft = function() {
+    app.toggleDrawerPanel('#paperDrawerPanelLeft');
+  };
+
+  app.toggleDrawerPanelRight = function() {
+    app.toggleDrawerPanel('#paperDrawerPanelRight');
   };
 
   // Scroll page to top and expand header
@@ -97,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
 
   app.onTypeSelected = function(e, detail) {
-    app.closeDrawer();
+    app.toggleDrawerPanelLeft();
 
     switch (detail) {
       case 'Goal':
@@ -125,5 +131,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       object: this.subject.id
     };
   }
+
 
 })(document);
