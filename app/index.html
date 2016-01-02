@@ -109,7 +109,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  <div class="content" style="overflow-y: scroll;padding: 10px 20px">
                    <section>
                      <paper-material elevation="1">
-                       <o-identifier user="{{user}}" show$="{{!user}}"></o-identifier>
+                       <o-identifier user="{{user}}"></o-identifier>
                      </paper-material>
                      <o-list items="{{subject.dataSelection}}" on-item-selected="onSubjectChange"></o-list>
                    </section>
@@ -121,13 +121,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 
         <paper-toolbar>
-          <paper-icon-button icon="menu" paper-drawer-left on-click="toggleDrawerPanelLeft"></paper-icon-button>
+          <paper-icon-button icon="icons:chevron-left" paper-drawer-left on-click="toggleDrawerPanelLeft"></paper-icon-button>
           <span class="flex">
-            <paper-button raised on-click="onActivityClick">
-              <iron-icon icon="icons:alarm-on"></iron-icon>Start
-            </paper-button>
+            <paper-icon-button icon="icons:alarm-on" on-click="onActivityClick">Start</paper-icon-button>
           </span>
-          <paper-icon-button icon="menu" paper-drawer-right on-click="toggleDrawerPanelRight"></paper-icon-button>
+          <paper-icon-button icon="icons:perm-identity"></paper-icon-button>
+          <paper-icon-button icon="icons:chevron-right" paper-drawer-right on-click="toggleDrawerPanelRight"></paper-icon-button>
         </paper-toolbar>
       </div>
 
