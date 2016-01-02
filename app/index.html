@@ -97,18 +97,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-drawer-panel id="paperDrawerPanelLeft" drawer-toggle-attribute="paper-drawer-left">
 
             <paper-scroll-header-panel drawer>
-              <img src="{{subject.image}}" style="width:255px;height:255px">
+              <img src="{{subject.image}}" hidden$="{{!subject.image}}" style="width:255px;height:255px">
               <o-type-selector subject="{{subject}}" on-type-selected="onTypeSelected"></o-type-selector>
             </paper-scroll-header-panel>
 
             <paper-scroll-header-panel main>
              <paper-drawer-panel id="paperDrawerPanelRight" right-drawer drawer-toggle-attribute="paper-drawer-right" >
-               <div drawer> right drawer panel... </div>
+               <div style="border-left: 1px solid #ccc;" drawer> right drawer panel... </div>
                <div main>
-                 <div class="content">
+                 <div class="content" style="overflow-y: scroll;padding: 10px 20px">
                    <section>
                      <paper-material elevation="1">
-                       <o-identifier user="{{user}}" show$="{{!user}}"></o-identifier>
+                       <o-identifier user="{{user}}"></o-identifier>
                      </paper-material>
                      <o-list items="{{subject.dataSelection}}" on-item-selected="onSubjectChange"></o-list>
                    </section>
@@ -120,13 +120,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 
         <paper-toolbar>
-          <paper-icon-button icon="menu" paper-drawer-left on-click="toggleDrawerPanelLeft"></paper-icon-button>
+          <paper-icon-button icon="icons:chevron-left" paper-drawer-left on-click="toggleDrawerPanelLeft"></paper-icon-button>
           <span class="flex">
-            <paper-button raised on-click="onActivityClick">
-              <iron-icon icon="icons:alarm-on"></iron-icon>Start
-            </paper-button>
+            <paper-icon-button icon="icons:alarm-on" on-click="onActivityClick">Start</paper-icon-button>
           </span>
-          <paper-icon-button icon="menu" paper-drawer-right on-click="toggleDrawerPanelRight"></paper-icon-button>
+          <paper-icon-button icon="icons:perm-identity"></paper-icon-button>
+          <paper-icon-button icon="icons:chevron-right" paper-drawer-right on-click="toggleDrawerPanelRight"></paper-icon-button>
         </paper-toolbar>
       </div>
 
