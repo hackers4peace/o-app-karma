@@ -69,6 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               return self.fetchResourceContainers(doc);
             })
             .then(function(containers) {
+              console.log(resource.id, containers);
               containers.forEach(function(container) {
                 var property = _.intersection(self._suportedRelations.rel, container.rel)[0];
                 if (property) {
@@ -90,7 +91,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
         onUserChange: function(changeRecord) {
-
           if (changeRecord.path === 'user.id') {
             var resource = {
               id: changeRecord.value
@@ -99,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return this.processResource(resource)
               .then(function(resource) {
                 self.user = resource;
-                self.set('subject', _.cloneDeep(self.user)); //FIXME !
+                self.set('subject.id', self.user.id); //FIXME
                 console.log('onUserChange', resource);
                 return resource;
               });
@@ -129,6 +129,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         fetchResourceContainers: function(resourceDoc) {
           var self = this;
+
+          //FIXME use json-ld expansion instead
+          resourceDoc['@graph'].forEach(function (item) {
+            if (item.rev && typeof(item.rev) === 'string') {
+              item.rev = [item.rev];
+            }
+            if (item.rel && typeof(item.rel) === 'string') {
+              item.rel = [item.rel];
+            }
+
+            if (item.type && typeof(item.type) === 'string') {
+              item.type = [item.type];
+            }
+          });
           var containers = _.filter(resourceDoc['@graph'], function(item) {
             if (item.type && item.type.indexOf('Container') >= 0) {
               return _.intersection(item.rel, self._suportedRelations.rel).length || _.intersection(item.rev, self._suportedRelations.rev).length;

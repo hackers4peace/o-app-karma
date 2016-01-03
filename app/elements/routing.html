@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // Routes
     page('/', scrollToTop, function() {
-      app.title = 'Welcome to Avocados';
+      app.set('subject.id', app.user.id);
     });
 
     page('/subject/:id', scrollToTop, function(data) {

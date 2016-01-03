@@ -107,9 +107,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     switch (detail.subject) {
       case 'Goal':
-        app.set('subject.dataSelection', app.subject['@reverse']['role:assignee']);
-        break;
+        if (app.subject.type.indexOf('Person') >= 0) {
+          app.set('subject.dataSelection', app.subject['@reverse']['role:assignee']);
+        } else if (app.subject.type.indexOf('Project') >= 0) {
+          app.set('subject.dataSelection', app.subject.goal);
+        }
 
+        break;
       case 'Project':
         app.set('subject.dataSelection', app.subject['@reverse']['role:contributor']);
         break;
@@ -123,7 +127,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.onSubjectChange = function (e, detail) {
     if (detail && detail.id) {
-      this.set('subject.id', detail.id); //FIXME remove suprise
+      var path = '/subject/' + btoa(detail.id);
+      page(path);
     }
   }
 
