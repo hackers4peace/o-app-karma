@@ -104,21 +104,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.onTypeSelected = function(e, detail) {
     app.toggleDrawerPanelLeft();
-    console.log(detail.subject);
+
     switch (detail.subject) {
       case 'Goal':
-        app.set('subject.dataSelection', app.subject.goals);
+        app.set('subject.dataSelection', app.subject['@reverse']['role:assignee']);
         break;
 
       case 'Project':
-        app.set('subject.dataSelection', app.subject.projects);
+        app.set('subject.dataSelection', app.subject['@reverse']['role:contributor']);
         break;
 
        case 'Activity':
-        app.set('subject.dataSelection', app.subject.activities);
+        app.set('subject.dataSelection', app.subject['@reverse']['actor']);
         break;
     }
+      console.log('dataSelection', app.subject.dataSelection);
   }
+
   app.onSubjectChange = function (e, detail) {
     if (detail && detail.id) {
       this.set('subject.id', detail.id); //FIXME remove suprise

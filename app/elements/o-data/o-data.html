@@ -172,11 +172,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               //for each element we need to find corresponding document returned from Promise.all
               return elements.map(function(id) {
                 //now find the document describing the resource
-                return _.find(documents, function(doc) {
+                var outerDoc = _.find(documents, function(doc) {
                   //pick object representing the resource
                   return _.find(doc['@graph'], function(item) {
                     return item.id === id;
                   });
+                });
+
+                return _.find(outerDoc['@graph'], function(item) {
+                  return item.id === id;
                 });
               });
             });
