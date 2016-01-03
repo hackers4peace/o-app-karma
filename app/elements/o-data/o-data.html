@@ -41,6 +41,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           documents: {
             type: Object,
             value: {}
+          },
+
+          _suportedRelations: {
+            type: Object,
+            value: {
+              rev: ['role:contributor', 'role:assignee', 'actor'],
+              rel: ['goal']
+            }
           }
         },
         observers: [
@@ -48,7 +56,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           'onSubjectChange(subject.*)',
           'onUserActivityChange(user.activities.*)'
         ],
-        onUserActivityChange: function (changeRecord) {
+
+        //maps data from the web to the internal representation
+        processResource: function(resource) {
+          var self = this;
+          return this.fetchResource(resource.id).then(function(doc) {
+              //FIXME: dont override resource;
+              resource = _.find(doc['@graph'], function(item) {
+                return item.id == resource.id;
+              });
+              resource['@reverse'] = {};
+              return self.fetchResourceContainers(doc);
+            })
+            .then(function(containers) {
+              containers.forEach(function(container) {
+                var property = _.intersection(self._suportedRelations.rel, container.rel)[0];
+                if (property) {
+                  resource[property] = container.contains;
+                } else {
+                  property = _.intersection(self._suportedRelations.rev, container.rev)[0];
+                  resource['@reverse'][property] = container.contains;
+                }
+              });
+              return resource;
+            })
+        },
+        onUserActivityChange: function(changeRecord) {
           //console.log(this.get);
           if (changeRecord.path == 'user.activities.length') {
             var added = _.filter(this.user.activities, function(activity) {
@@ -57,143 +90,95 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
         onUserChange: function(changeRecord) {
-          if (changeRecord.path === 'user.id') {
-            console.log('changeRecord', changeRecord.path);
-            var userId = changeRecord.value;
-            var self = this;
-            this.fetchSubject(userId).then(function(doc) {
-                var person = _.find(doc['@graph'], function(item) {
-                  return item.id == userId;
-                });
-                self.user = person;
-                self.documents[userId] = doc;
 
-                return doc;
-              })
-              .then(function() {
-                return self.fetchPersonProjects(userId)
-              })
-              .then(function(projects) {
-                self.set('user.projects', projects);
-                return projects;
-              })
-              .then(function() {
-                return self.fetchPersonGoals(userId);
-              })
-              .then(function(goals) {
-                self.set('user.goals', goals);
-                return goals;
-              })
-              .then(function() {
-                return self.fetchPersonActivities(userId);
-              })
-              .then(function(activities) {
-                self.set('user.activities', activities);
-              })
-              .then(function(hack) {
-                self.set('subject', self.user); //FIXME !
-              })
+          if (changeRecord.path === 'user.id') {
+            var resource = {
+              id: changeRecord.value
+            };
+            var self = this;
+            return this.processResource(resource)
+              .then(function(resource) {
+                self.user = resource;
+                self.set('subject', _.cloneDeep(self.user)); //FIXME !
+                console.log('onUserChange', resource);
+                return resource;
+              });
           }
         },
         onSubjectChange: function(changeRecord) {
           if (changeRecord.path === 'subject.id') {
-            var subjectId = changeRecord.value;
+            var resource = {
+              id: changeRecord.value
+            };
             var self = this;
-            self.fetchSubject(subjectId).then(function(doc) {
-                var subject = _.find(doc['@graph'], function(item) {
-                  return item.id == subjectId;
-                });
-
-                self.subject = subject;
-                self.documents[subjectId] = doc;
-
-                return doc;
-              })
-              .then(function(doc) {
-                var container = _.find(doc['@graph'], function(item) {
-                  return item.rel && item.rel.indexOf('goal') >= 0;
-                });
-
-                if (container) {
-                  return self.fetchContainer(subjectId, {
-                    rel: 'goal'
-                  });
-                } else {
-                  return null;
-                }
-              })
-              .then(function(goals) {
-                if (goals !== null) {
-                  self.set('subject.goals', goals);
-                }
-
-                return goals;
+            return this.processResource(resource)
+              .then(function(resource) {
+                self.subject = resource;
+                console.log('onSubjectChange', resource);
+                return resource;
               });
           }
         },
-        fetchSubject: function(url) {
+
+        fetchResource: function(url) {
           return fetch(url)
             .then(function(response) {
               return response.json();
             });
         },
-        fetchPersonProjects: function(personId) {
-          return this.fetchContainer(personId, {
-            rev: 'role:contributor'
-          })
-        },
-        fetchPersonGoals: function(personId) {
-          return this.fetchContainer(personId, {
-            rev: 'role:assignee'
-          })
-        },
-        fetchPersonActivities: function(personId) {
-          return this.fetchContainer(personId, {
-            rev: 'actor'
-          })
-        },
-        fetchContainer: function(subjectId, link) {
+
+        fetchResourceContainers: function(resourceDoc) {
           var self = this;
-          var doc = this.documents[subjectId];
-          var container = _.find(doc['@graph'], function(item) {
-            if (link.rel) {
-              return item.rel && item.rel.indexOf(link.rel) >= 0;
-            } else {
-              return item.rev && item.rev.indexOf(link.rev) >= 0;
+          var containers = _.filter(resourceDoc['@graph'], function(item) {
+            if (item.type && item.type.indexOf('Container') >= 0) {
+              return _.intersection(item.rel, self._suportedRelations.rel).length || _.intersection(item.rev, self._suportedRelations.rev).length;
             }
+            return false;
           });
 
-          if (!container) {
-            console.log('container not found', link);
-            return Promise.resolve([]);
-          }
+          console.log(containers);
 
-          return fetch(container.id)
-            .then(function(response) {
-              return response.json();
-            })
+          return Promise.all(containers.map(this.fetchContainer.bind(this)));
+        },
+
+        fetchContainer: function(containerLink) {
+          var self = this;
+
+          return this.fetchResource(containerLink.id)
             .then(function(doc) {
-              self.documents[container.id] = doc;
-
-              container = _.find(doc['@graph'], function(item) {
-                return item.id === container.id;
+              self.documents[containerLink.id] = doc;
+              var container = _.find(doc['@graph'], function(item) {
+                return item.id === containerLink.id;
               });
+              return self.fetchContainerResources(container)
+            })
+            .then(function(resources) {
+              var container = containerLink;
+              container.contains = resources;
+              return container;
+            });
+        },
 
-              var elements = container.contains;
-              return Promise.all(elements.map(function(element) {
-                return fetch(element);
-              }));
-            })
-            .then(function(responses) {
-              return Promise.all(responses.map(function(item) {
-                return item.json();
-              }));
-            })
-            .then(function(array) {
-              var elements = array.map(function(doc) {
-                return doc['@graph'][0]; //FIXME
+        fetchContainerResources: function(container) {
+          var self = this;
+          //get list of "links" of resources to fetch
+          var elements = container.contains;
+          //fetch documents descibing these resources
+          return Promise.all(elements.map(function(element) {
+              return self.fetchResource(element);
+            }))
+            //return array of objects in original order
+            .then(function(documents) {
+              //for each element we need to find corresponding document returned from Promise.all
+              return elements.map(function(id) {
+                //now find the document describing the resource
+                return _.find(documents, function(doc) {
+                  //pick object representing the resource
+                  return _.find(doc['@graph'], function(item) {
+                    return item.id === id;
+                  });
+                });
               });
-              return elements;
             });
         }
       });
