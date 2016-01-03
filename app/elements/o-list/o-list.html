@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div class="card-content">
           <template is="dom-if" if="{{isActivity(item)}}">
-            {{item.startTime}}
+            <div>{{item.startTime}}</div>
           </template>
           <template is="dom-if" if="{{!isActivity(item)}}">
             <div on-click="onClick">
@@ -99,6 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         },
         isActivity: function (item) {
+          console.log('isActivity',item);
           return item.type === 'Activity'
         },
         onClick: function (e) {

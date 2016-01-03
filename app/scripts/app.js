@@ -94,7 +94,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.handleOnStop = function () {
     this.set('currentActivity.endTime',(new Date()).toISOString());
+    if (!app.user.activities) {
+      app.user.activities = [];
+    }
+    //not adding for the first time :)
     this.push('user.activities', app.currentActivity);
+
+    app.subject['@reverse']['actor'] = _.cloneDeep(app.user.activities);
     this.set('currentActivity', null);
   }
   app.user = {
@@ -138,20 +144,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     switch (detail.subject) {
       case 'Goal':
         if (app.subject.type.indexOf('Person') >= 0) {
-          app.set('subject.dataSelection', app.subject['@reverse']['role:assignee']);
+          app.set('subject.dataSelection', _.cloneDeep(app.subject['@reverse']['role:assignee']));
         } else if (app.subject.type.indexOf('Project') >= 0) {
-          app.set('subject.dataSelection', app.subject.goal);
+          app.set('subject.dataSelection', _.cloneDeep(app.subject.goal));
         }
 
         break;
       case 'Project':
-        app.set('subject.dataSelection', app.subject['@reverse']['role:contributor']);
+        app.set('subject.dataSelection', _.cloneDeep(app.subject['@reverse']['role:contributor']));
         break;
 
        case 'Activity':
-        app.set('subject.dataSelection', app.subject['@reverse']['actor']);
+        app.set('subject.dataSelection', _.cloneDeep(app.subject['@reverse']['actor']));
         break;
     }
+
+    console.log(app.subject.dataSelection)
   }
 
   app.onRelationSelected = function (e, detail) {
