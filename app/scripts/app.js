@@ -104,8 +104,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.onTypeSelected = function(e, detail) {
     app.toggleDrawerPanelLeft();
-
-    switch (detail) {
+    console.log(detail.subject);
+    switch (detail.subject) {
       case 'Goal':
         app.set('subject.dataSelection', app.subject.goals);
         break;
