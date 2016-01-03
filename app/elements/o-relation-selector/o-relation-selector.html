@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="o-relation-selector">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-menu class="list">
+      <template is="dom-repeat" items="{{_relations}}">
+        <paper-icon-item on-click="onClick">
+          <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
+          <span>{{item.text}}</span>
+        </paper-icon-item>
+      </template>
+    </paper-menu>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'o-relation-selector',
+
+        properties: {
+          _relations: {
+            type: Array,
+            value: [{
+              text: 'Assignee',
+              relation: 'role:assignee',
+              direction: 'rel',
+              icon: 'icons:arrow-forward'
+            }, {
+              text: 'Assigned',
+              relation: 'role:assignee',
+              direction: 'rev',
+              icon: 'icons:arrow-back'
+            }, {
+              text: 'Contributor',
+              relation: 'role:contributor',
+              direction: 'rel',
+              icon: 'icons:arrow-forward'
+            }, {
+              text: 'Contributed',
+              relation: 'role:contributor',
+              direction: 'rev',
+              icon: 'icons:arrow-back'
+            }, {
+              text: 'Actor',
+              relation: 'actor',
+              direction: 'rel',
+              icon: 'icons:arrow-forward'
+            }, {
+              text: 'Acted',
+              relation: 'actor',
+              direction: 'rev',
+              icon: 'icons:arrow-back'
+            }, {
+              text: 'Goal',
+              relation: 'goal',
+              direction: 'rel',
+              icon: 'icons:arrow-forward'
+            }
+           ]
+          }
+        },
+        onClick: function(e) {
+          this.fire('relation-selected', e.model.item);
+        }
+      });
+    })();
+  </script>
+</dom-module>

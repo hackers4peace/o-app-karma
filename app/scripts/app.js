@@ -101,6 +101,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     id: 'https://idp.wwelves.org/ef093385-8906-4c78-9a69-9217c76013a8#id',
     activities: []
   }
+  // Person Project Goal Organization Activity
+  // app.relations = [
+  //   {
+  //     objectType: 'Person',
+  //     displayName: '',
+  //     icon: ''
+  //     relations: [
+  //       {
+  //         relationType : 'Goal',
+  //         objectType: 'rev'
+  //       },
+  //     ]
+  //   }
+  //   {  'Person', objectType: '', relationType: '' },
+  //   { subjectType: 'Person', objectType: '', relationType: '' },
+  //   { subjectType: 'Person', objectType: '', relationType: '' },
+  //   { subjectType: 'Person', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  //   { subjectType: '', objectType: '', relationType: '' },
+  // ]
 
   app.onTypeSelected = function(e, detail) {
     app.toggleDrawerPanelLeft();
@@ -125,12 +155,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       console.log('dataSelection', app.subject.dataSelection);
   }
 
+  app.onRelationSelected = function (e, detail) {
+    app.toggleDrawerPanelRight();
+
+    switch (detail.relation) {
+      case 'role:assignee':
+        app.set('subject.dataSelection', app.subject['@reverse']['role:assignee']);
+        break;
+      case 'goal':
+        app.set('subject.dataSelection', app.subject.goal);
+        break;
+      case 'role:contributor':
+        app.set('subject.dataSelection', app.subject['@reverse']['role:contributor']);
+        break;
+
+       case 'actor':
+        app.set('subject.dataSelection', app.subject['@reverse']['actor']);
+        break;
+    }
+      console.log('dataSelection', app.subject.dataSelection);
+  }
+
   app.onSubjectChange = function (e, detail) {
     if (detail && detail.id) {
       var path = '/subject/' + btoa(detail.id);
       page(path);
     }
   }
+
 
   app.onActivityClick = function (e) {
     app.currentActivity = {
