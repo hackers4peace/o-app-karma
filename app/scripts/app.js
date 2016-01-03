@@ -152,7 +152,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.set('subject.dataSelection', app.subject['@reverse']['actor']);
         break;
     }
-      console.log('dataSelection', app.subject.dataSelection);
   }
 
   app.onRelationSelected = function (e, detail) {
@@ -173,7 +172,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.set('subject.dataSelection', app.subject['@reverse']['actor']);
         break;
     }
-      console.log('dataSelection', app.subject.dataSelection);
   }
 
   app.onSubjectChange = function (e, detail) {

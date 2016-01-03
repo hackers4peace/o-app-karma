@@ -69,7 +69,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               return self.fetchResourceContainers(doc);
             })
             .then(function(containers) {
-              console.log(resource.id, containers);
               containers.forEach(function(container) {
                 var property = _.intersection(self._suportedRelations.rel, container.rel)[0];
                 if (property) {
@@ -83,7 +82,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             })
         },
         onUserActivityChange: function(changeRecord) {
-          //console.log(this.get);
           if (changeRecord.path == 'user.activities.length') {
             var added = _.filter(this.user.activities, function(activity) {
               return !activity.id;
@@ -100,7 +98,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               .then(function(resource) {
                 self.user = resource;
                 self.set('subject.id', self.user.id); //FIXME
-                console.log('onUserChange', resource);
                 return resource;
               });
           }
@@ -114,7 +111,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return this.processResource(resource)
               .then(function(resource) {
                 self.subject = resource;
-                console.log('onSubjectChange', resource);
                 return resource;
               });
           }
@@ -149,8 +145,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
             return false;
           });
-
-          console.log(containers);
 
           return Promise.all(containers.map(this.fetchContainer.bind(this)));
         },
