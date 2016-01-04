@@ -35,45 +35,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'o-relation-selector',
 
         properties: {
+          subject: {
+            type: Object,
+            observer: '_onSubjectChange'
+          },
           _relations: {
             type: Array,
+            value: []
+          },
+          allRelations: {
+            type: Array,
             value: [{
-              text: 'Assignee',
+              text: 'responsibility of',
               relation: 'role:assignee',
               direction: 'rel',
               icon: 'icons:arrow-forward'
             }, {
-              text: 'Assigned',
+              text: 'takes responsibility',
               relation: 'role:assignee',
               direction: 'rev',
               icon: 'icons:arrow-back'
             }, {
-              text: 'Contributor',
+              text: 'has contributor',
               relation: 'role:contributor',
               direction: 'rel',
               icon: 'icons:arrow-forward'
             }, {
-              text: 'Contributed',
+              text: 'is contributor of',
               relation: 'role:contributor',
               direction: 'rev',
               icon: 'icons:arrow-back'
             }, {
-              text: 'Actor',
-              relation: 'actor',
-              direction: 'rel',
-              icon: 'icons:arrow-forward'
-            }, {
-              text: 'Acted',
+              text: 'is doing',
               relation: 'actor',
               direction: 'rev',
               icon: 'icons:arrow-back'
             }, {
-              text: 'Goal',
+              text: 'has goal',
               relation: 'goal',
               direction: 'rel',
               icon: 'icons:arrow-forward'
             }
            ]
+          }
+        },
+        _onSubjectChange: function(newVal, oldVal) {
+          if (newVal) {
+            var self = this;
+            this._relations = _.filter(this.allRelations, function (item) {
+               return self.subject[item.direction][item.relation];
+            });
           }
         },
         onClick: function(e) {

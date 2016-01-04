@@ -29,13 +29,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           user: {
             type: Object,
             notify: true,
-            value: {}
+            value: {
+              rev: {
+                actor: []
+              },
+              rel: {}
+            }
           },
 
           subject: {
             type: Object,
             notify: true,
-            value: {}
+            value: {
+              rev: {},
+              rel: {}
+            }
           },
 
           documents: {
@@ -54,10 +62,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         observers: [
           'onUserChange(user.*)',
           'onSubjectChange(subject.*)',
-          'onUserActivityChange(user.activities.*)'
+          'onUserActivityChange(user.rev.actor.*)'
         ],
 
         //maps data from the web to the internal representation
+        //TODO: reducte type array to single value expected by app
         processResource: function(resource) {
           var self = this;
           return this.fetchResource(resource.id).then(function(doc) {
@@ -65,25 +74,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               resource = _.find(doc['@graph'], function(item) {
                 return item.id == resource.id;
               });
-              resource['@reverse'] = {};
+              resource.rel = {};
+              resource.rev = {};
               return self.fetchResourceContainers(doc);
             })
             .then(function(containers) {
               containers.forEach(function(container) {
                 var property = _.intersection(self._suportedRelations.rel, container.rel)[0];
                 if (property) {
-                  resource[property] = container.contains;
+                  resource.rel[property] = container.contains;
                 } else {
                   property = _.intersection(self._suportedRelations.rev, container.rev)[0];
-                  resource['@reverse'][property] = container.contains;
+                  resource.rev[property] = container.contains;
                 }
               });
               return resource;
             })
         },
         onUserActivityChange: function(changeRecord) {
-          if (changeRecord.path == 'user.activities.length') {
-            var added = _.filter(this.user.activities, function(activity) {
+          if (changeRecord.path == 'user.rev.actor.length') {
+            var added = _.filter(this.user.rev.actor, function(activity) {
               return !activity.id;
             });
           }
@@ -97,6 +107,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return this.processResource(resource)
               .then(function(resource) {
                 self.user = resource;
+                //TODO: handle case with missing activities container
+                if (!self.user.rel.actor) {
+                  self.user.rel.actor = [];
+                }
                 self.set('subject.id', self.user.id); //FIXME
                 return resource;
               });

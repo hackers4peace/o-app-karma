@@ -94,13 +94,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.handleOnStop = function () {
     this.set('currentActivity.endTime',(new Date()).toISOString());
-    if (!app.user.activities) {
-      app.user.activities = [];
-    }
     //not adding for the first time :)
-    this.push('user.activities', app.currentActivity);
+    this.push('user.rev.actor', app.currentActivity);
 
-    app.subject['@reverse']['actor'] = _.cloneDeep(app.user.activities);
     this.set('currentActivity', null);
   }
   app.user = {
@@ -108,6 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     activities: []
   }
   // Person Project Goal Organization Activity
+  //
   // app.relations = [
   //   {
   //     objectType: 'Person',
@@ -137,48 +134,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   //   { subjectType: '', objectType: '', relationType: '' },
   //   { subjectType: '', objectType: '', relationType: '' },
   // ]
+app.defaultRelations = {
+  "Person": {
+    "Project": { "direction": "rev", "type":  "role:contributor" },
+    "Goal": { "direction": "rev", "type": "role:assignee" },
+    "Activity": { "direction": "rev", "type": "actor" }
+  },
+  "Project": {
+    "Person": { "direction": "rel", "type": "role:contributor" },
+    "Goal": { "direction": "rel", "type": "goal" }
+  },
+  "Goal": {
+    "Person": { "direction": "rel", "type": "role:assignee" },
+    "Project": { "direction": "rev", "type": "goal" },
+    "Activity": { "direction": "rev", "type": "object" }
+  }
+};
 
   app.onTypeSelected = function(e, detail) {
     app.toggleDrawerPanelLeft();
+    //FIXME: refactor after processResource in o-data
+    var subjectType = _.intersection(app.subject.type, ['Person', 'Project', 'Goal'])[0];
+    var relation = app.defaultRelations[subjectType][detail.type];
 
-    switch (detail.subject) {
-      case 'Goal':
-        if (app.subject.type.indexOf('Person') >= 0) {
-          app.set('subject.dataSelection', _.cloneDeep(app.subject['@reverse']['role:assignee']));
-        } else if (app.subject.type.indexOf('Project') >= 0) {
-          app.set('subject.dataSelection', _.cloneDeep(app.subject.goal));
-        }
-
-        break;
-      case 'Project':
-        app.set('subject.dataSelection', _.cloneDeep(app.subject['@reverse']['role:contributor']));
-        break;
-
-       case 'Activity':
-        app.set('subject.dataSelection', _.cloneDeep(app.subject['@reverse']['actor']));
-        break;
-    }
-
-    console.log(app.subject.dataSelection)
+    app.set('subject.dataSelection',
+      _.cloneDeep(app.subject[relation.direction][relation.type]));
   }
 
   app.onRelationSelected = function (e, detail) {
     app.toggleDrawerPanelRight();
 
-    switch (detail.relation) {
-      case 'role:assignee':
-        app.set('subject.dataSelection', app.subject['@reverse']['role:assignee']);
-        break;
-      case 'goal':
-        app.set('subject.dataSelection', app.subject.goal);
-        break;
-      case 'role:contributor':
-        app.set('subject.dataSelection', app.subject['@reverse']['role:contributor']);
-        break;
-
-       case 'actor':
-        app.set('subject.dataSelection', app.subject['@reverse']['actor']);
-        break;
+    if (detail.direction === 'rel') {
+      app.set('subject.dataSelection', _.cloneDeep(app.subject.rel[detail.relation]));
+    } else {
+      app.set('subject.dataSelection', _.cloneDeep(app.subject.rev[detail.relation]));
     }
   }
 
@@ -197,5 +186,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     };
   }
 
+  app.goHome = function (e) {
+    page('/');
+  }
 
 })(document);

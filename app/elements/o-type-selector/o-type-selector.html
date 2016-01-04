@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-icon icon="icons:home" item-icon></iron-icon>
         <span>Overview</span>
       </paper-icon-item>
-        <template is="dom-repeat" items="{{_subjects}}">
+        <template is="dom-repeat" items="{{_types}}">
           <paper-icon-item on-click="onClick">
             <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
             <span>{{item.text}}</span>
@@ -40,25 +40,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'o-type-selector',
 
         properties: {
-          _subjects: {
+          subject:  {
+            type: Object,
+            observer: '_onSubjectChange'
+          },
+          avaliableTypes: {
+            type: Object
+          },
+          _types: {
+            type: Array
+          },
+          _allTypes: {
             type: Array,
             value: [
               {
                 text: 'Projects',
-                subject: 'Project',
+                type: 'Project',
                 icon: 'icons:work'
               },
               {
                 text: 'Goals',
-                subject: 'Goal',
+                type: 'Goal',
                 icon: 'icons:radio-button-checked'
               },
               {
                 text: 'Activities',
-                subject: 'Activity',
+                type: 'Activity',
                 icon: 'icons:alarm-on'
               }
             ]
+          }
+        },
+        _onSubjectChange: function (newVal, oldVal) {
+          if (newVal && this.subject && this.subject.type) {
+            var self = this;
+            //FIXME: refactor after processResource in o-data
+            var subjectType = _.intersection(this.subject.type, ['Person', 'Project', 'Goal'])[0];
+            this._types = _.filter(this._allTypes, function (item) {
+               return self.avaliableTypes[subjectType][item.type];
+            });
           }
         },
         onClick: function(e) {
