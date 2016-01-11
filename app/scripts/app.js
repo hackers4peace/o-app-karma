@@ -136,31 +136,102 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // ]
 app.defaultRelations = {
   "Person": {
-    "Project": { "direction": "rev", "type":  "role:contributor" },
-    "Goal": { "direction": "rev", "type": "role:assignee" },
-    "Activity": { "direction": "rev", "type": "actor" }
+    "Project": [
+      { "direction": "rev", "type":  "role:contributor" }
+    ],
+    "Goal": [
+      { "direction": "rev", "type": "role:assignee" }
+    ],
+    "Activity": [
+      { "direction": "rev", "type": "actor" }
+    ]
   },
   "Project": {
-    "Person": { "direction": "rel", "type": "role:contributor" },
-    "Goal": { "direction": "rel", "type": "goal" }
+    "Person": [
+      { "direction": "rel", "type": "role:contributor" }
+    ],
+    "Goal": [
+      { "direction": "rel", "type": "goal" }
+    ]
   },
   "Goal": {
-    "Person": { "direction": "rel", "type": "role:assignee" },
-    "Project": { "direction": "rev", "type": "goal" },
-    "Activity": { "direction": "rev", "type": "object" }
+    "Person": [
+      { "direction": "rel", "type": "role:assignee" }
+    ],
+    "Project": [
+      { "direction": "rev", "type": "goal" }
+    ],
+    "Activity": [
+      { "direction": "rev", "type": "object" }
+    ]
   }
 };
 
+app.allRelations = [{
+    text: 'responsibility of',
+    relation: 'role:assignee',
+    direction: 'rel',
+    icon: 'icons:arrow-forward'
+  }, {
+    text: 'takes responsibility',
+    relation: 'role:assignee',
+    direction: 'rev',
+    icon: 'icons:arrow-back'
+  }, {
+    text: 'has contributor',
+    relation: 'role:contributor',
+    direction: 'rel',
+    icon: 'icons:arrow-forward'
+  }, {
+    text: 'is contributor of',
+    relation: 'role:contributor',
+    direction: 'rev',
+    icon: 'icons:arrow-back'
+  }, {
+    text: 'is doing',
+    relation: 'actor',
+    direction: 'rev',
+    icon: 'icons:arrow-back'
+  }, {
+    text: 'has goal',
+    relation: 'goal',
+    direction: 'rel',
+    icon: 'icons:arrow-forward'
+  }
+];
+
+app.allTypes = [
+  {
+    text: 'Projects',
+    type: 'Project',
+    icon: 'icons:work'
+  },
+  {
+    text: 'Goals',
+    type: 'Goal',
+    icon: 'icons:radio-button-checked'
+  },
+  {
+    text: 'Activities',
+    type: 'Activity',
+    icon: 'icons:alarm-on'
+  }
+];
+  app.objectType = 'Thing';
   app.onTypeSelected = function(e, detail) {
     app.toggleDrawerPanelLeft();
     //FIXME: refactor after processResource in o-data
     var subjectType = _.intersection(app.subject.type, ['Person', 'Project', 'Goal'])[0];
-    var relation = app.defaultRelations[subjectType][detail.type];
+    var relation = app.defaultRelations[subjectType][detail.type][0];
 
     app.set('subject.dataSelection',
       _.cloneDeep(app.subject[relation.direction][relation.type]));
+
+    app.objectType = detail.type;
+    app.relationType = relation;
   }
 
+  app.relationType = null;
   app.onRelationSelected = function (e, detail) {
     app.toggleDrawerPanelRight();
 
@@ -177,7 +248,6 @@ app.defaultRelations = {
       page(path);
     }
   }
-
 
   app.onActivityClick = function (e) {
     app.currentActivity = {

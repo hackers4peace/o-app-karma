@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <paper-menu class="list">
-      <template is="dom-repeat" items="{{_relations}}">
+      <template is="dom-repeat" items="{{relations}}">
         <paper-icon-item on-click="onClick">
           <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
           <span>{{item.text}}</span>
@@ -39,50 +39,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Object,
             observer: '_onSubjectChange'
           },
-          _relations: {
+          objectType: {
+            type: String,
+            observer: '_onObjectTypeChanged'
+          },
+          relations: {
             type: Array,
             value: []
           },
+          avaliableRelations: {
+            type: Object
+          },
           allRelations: {
-            type: Array,
-            value: [{
-              text: 'responsibility of',
-              relation: 'role:assignee',
-              direction: 'rel',
-              icon: 'icons:arrow-forward'
-            }, {
-              text: 'takes responsibility',
-              relation: 'role:assignee',
-              direction: 'rev',
-              icon: 'icons:arrow-back'
-            }, {
-              text: 'has contributor',
-              relation: 'role:contributor',
-              direction: 'rel',
-              icon: 'icons:arrow-forward'
-            }, {
-              text: 'is contributor of',
-              relation: 'role:contributor',
-              direction: 'rev',
-              icon: 'icons:arrow-back'
-            }, {
-              text: 'is doing',
-              relation: 'actor',
-              direction: 'rev',
-              icon: 'icons:arrow-back'
-            }, {
-              text: 'has goal',
-              relation: 'goal',
-              direction: 'rel',
-              icon: 'icons:arrow-forward'
-            }
-           ]
+            type: Array
+          }
+        },
+        _onObjectTypeChanged: function (newVal, oldVal) {
+          if (newVal) {
+            var self = this;
+            console.log('TODO', newVal);
           }
         },
         _onSubjectChange: function(newVal, oldVal) {
           if (newVal) {
             var self = this;
-            this._relations = _.filter(this.allRelations, function (item) {
+            this.relations = _.filter(this.allRelations, function (item) {
                return self.subject[item.direction][item.relation];
             });
           }
