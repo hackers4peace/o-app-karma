@@ -71,11 +71,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- build:js scripts/fetch.js -->
   <script src="bower_components/fetch/fetch.js"></script>
   <!-- endbuild -->
+  
+  <!-- Force https -->
+  <script>'https:'!==window.location.protocol&&(window.location.protocol='https')</script>
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
-
   <!-- For shared styles, shared-styles.html import in elements.html -->
   <style is="custom-style" include="shared-styles"></style>
 

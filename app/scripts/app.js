@@ -6,6 +6,13 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+// Sets app default base URL
+app.baseUrl = '/';
+if (window.location.port === '') {  // if production
+  // Uncomment app.baseURL below and
+  // set app.baseURL to '/your-pathname/' if running from folder in production
+  app.baseUrl = '/o-app-karma/';
+}
 
 (function(document) {
   'use strict';
