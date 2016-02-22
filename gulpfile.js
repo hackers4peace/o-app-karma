@@ -96,7 +96,7 @@ var optimizeHtmlTask = function(src, dest) {
 
 // Transpile all JS to ES5.
 gulp.task('js', function () {
-  return gulp.src(['app/**/*.{js,html}', '!app/bower_components/**/*'])
+  return gulp.src(['app/**/*.{js,html}', '!app/bower_components/**/*', '!app/scripts/bundle.js'])
     .pipe($.sourcemaps.init())
     .pipe($.if('*.html', $.crisper({scriptInHead:false}))) // Extract JS from .html files
     .pipe($.if('*.js', $.babel({

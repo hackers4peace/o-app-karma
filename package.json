@@ -42,6 +42,8 @@
   "dependencies": {
     "lodash": "^4.5.0",
     "moment": "^2.11.2",
-    "o-api-client": "0.0.2"
+    "o-api-client": "0.0.2",
+    "rdf-parser-jsonld": "^0.3.0",
+    "rdf-serializer-jsonld": "^0.3.0"
   }
 }
